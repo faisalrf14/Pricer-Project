@@ -18,26 +18,26 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> mapEventToState(
     LoginEvent event,
   ) async* {
-    if(event is LoginAccount){
+    if (event is LoginAccount) {
       yield* _mapLoginAccountToState(event);
     }
   }
 
-  Stream<LoginState> _mapLoginAccountToState(LoginAccount event) async*{
+  Stream<LoginState> _mapLoginAccountToState(LoginAccount event) async* {
     yield LoginLoading();
 
-    try{
+    try {
       LoginResponse loginResponse = await loginUser(email: event.email, password: event.password);
       print(loginResponse.message);
-      if(loginResponse.message.toLowerCase() == 'login success'){
+      if (loginResponse.message.toLowerCase() == 'login success') {
         yield LoginSucces();
-      }else{
+      } else {
         yield LoginFailure(
           message: loginResponse.message.replaceAll(new RegExp(r'[\(\[].*?[\)\]]'), ''),
         );
       }
     } catch (e) {
-      if (e.code == 'wrong-password'){
+      if (e.code == 'wrong-password') {
         print("Please check your password");
       }
       yield LoginFailure(message: 'Login Failed');
@@ -48,9 +48,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 Future<LoginResponse> loginUser({String email, String password}) async {
   try {
     LoginResponse loginResponse = await FireBaseAuthService.signInWithEmail(email: email, password: password);
-    if(loginResponse.user != null){
+    if (loginResponse.user != null) {
       return LoginResponse(message: 'Login Success', user: loginResponse.user);
-    }else{
+    } else {
       return LoginResponse(message: loginResponse.message);
     }
   } on PlatformException catch (e) {

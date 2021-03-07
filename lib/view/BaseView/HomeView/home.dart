@@ -11,26 +11,31 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        SizedBox(height: 110,),
-        Padding(padding: EdgeInsets.only(left: 16, right: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text("Username"),
-                SizedBox(height: 4,),
-                Text("Email"),
-              ],
-            ),
-            IconButton(
-              alignment: Alignment.topCenter,
-              icon: Icon(Icons.logout),
-              onPressed: () {},
-            ),
-          ],
+        SizedBox(
+          height: 110,
         ),
+        Padding(
+          padding: EdgeInsets.only(left: 16, right: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text("Username"),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Text("Email"),
+                ],
+              ),
+              IconButton(
+                alignment: Alignment.topCenter,
+                icon: Icon(Icons.logout),
+                onPressed: () {},
+              ),
+            ],
+          ),
         ),
         SizedBox(height: 40),
         Dashboard()

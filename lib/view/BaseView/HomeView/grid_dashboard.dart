@@ -1,46 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:pricer_project/view/widget/category_layout.dart/furniture_layout.dart';
+import 'package:pricer_project/view/widget/category_layout.dart/hobby_layout.dart';
+import 'package:pricer_project/view/widget/category_layout.dart/laptop_layout.dart';
+import 'package:pricer_project/view/widget/category_layout.dart/phone_layout.dart';
 import 'package:pricer_project/view/widget/layout.dart';
 
 class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<Items> list = [  
+    List<Items> list = [
       new Items(
         title: "Hobby",
-        image: "assets/images/gaming.png",
+        image: "assets/images/hobby.png",
         onPressed: () {
           Navigator.push(
-            context, 
-            MaterialPageRoute(builder: (context) => Layout(
-              appbar: 'Hobby Category'
-            )),
-      );
+            context,
+            MaterialPageRoute(
+              builder: (context) => Layout(
+                appbar: 'Hobby Category',
+                content: HobbyPage(),
+              ),
+            ),
+          );
         },
       ),
       new Items(
-        title: "Laptop",
-        image: "assets/images/gaming.png",
+        title: "Mobile Phone",
+        image: "assets/images/mobile.png",
         onPressed: () {
           Navigator.push(
-            context, 
-            MaterialPageRoute(builder: (context) => Layout(
-              appbar: 'Laptop Category',
-            )),
-      );
+            context,
+            MaterialPageRoute(
+              builder: (context) => Layout(
+                appbar: 'Mobile Phone Category',
+                content: PhonePage(),
+              ),
+            ),
+          );
         },
       ),
       new Items(
         title: "Furniture",
-        image: "assets/images/gaming.png",
+        image: "assets/images/furniture.png",
         onPressed: () {
           Navigator.push(
-            context, 
-            MaterialPageRoute(builder: (context) => Layout(
-              appbar: 'Furniture Category',
-              categoryName: 'Laptop',
-              categoryImage: ''
-            )),
-      );
+            context,
+            MaterialPageRoute(
+              builder: (context) => Layout(
+                appbar: 'Furniture Category',
+                content: FurniturePage(),
+              ),
+            ),
+          );
+        },
+      ),
+      new Items(
+        title: "Laptop",
+        image: "assets/images/laptop.png",
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Layout(
+                appbar: 'Laptop Category',
+                content: LaptopPage(),
+              ),
+            ),
+          );
         },
       ),
     ];
@@ -55,8 +81,7 @@ class Dashboard extends StatelessWidget {
           children: list.map((data) {
             return GestureDetector(
               child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.red, borderRadius: BorderRadius.circular(10)),
+                decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -65,7 +90,7 @@ class Dashboard extends StatelessWidget {
                       width: 100,
                     ),
                     SizedBox(
-                      height: 1,
+                      height: 10,
                     ),
                     Text(
                       data.title,
@@ -87,12 +112,4 @@ class Items {
   Function onPressed;
 
   Items({this.title, this.name, this.image, this.onPressed});
-}
-
-class Carousel {
-  String categoryName;
-  String categoryImage;
-  Function onPressed;
-
-  Carousel({this.categoryName, this.categoryImage, this.onPressed});
 }
