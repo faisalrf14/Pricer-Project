@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pricer_project/logic/auth/auth_bloc.dart';
+import 'package:pricer_project/services/service_session_manager.dart';
 import 'package:pricer_project/view/BaseView/HomeView/grid_dashboard.dart';
 
 class MyHome extends StatefulWidget {
@@ -7,6 +10,30 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomeState extends State<MyHome> {
+  String email;
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentUser();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  _getCurrentUser() async {
+    String userEmail = await SessionManagerService().getUser();
+    setState(() {
+      this.email = userEmail.split("@").first;
+    });
+  }
+
+  _handleLogout() {
+    BlocProvider.of<AuthBloc>(context).add(UserLoggedOut());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,17 +49,16 @@ class _MyHomeState extends State<MyHome> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text("Username"),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text("Email"),
+                  Text(
+                    "Welcome! " + this.email ?? "",
+                    style: TextStyle(fontSize: 20),
+                  )
                 ],
               ),
               IconButton(
                 alignment: Alignment.topCenter,
                 icon: Icon(Icons.logout),
-                onPressed: () {},
+                onPressed: () => _handleLogout(),
               ),
             ],
           ),

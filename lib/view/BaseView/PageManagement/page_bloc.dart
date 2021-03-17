@@ -12,22 +12,23 @@ class PageBloc extends Bloc<PageEvent, PageState> {
   Stream<PageState> mapEventToState(
     PageEvent event,
   ) async* {
-    if(event is SelectedPage){
+    if (event is SelectedPage) {
       yield* _mapSelectedPageToState(event);
     }
   }
 
   Stream<PageState> _mapSelectedPageToState(SelectedPage event) async* {
-    if(event.pageState == 'Login'){
+    if (event.pageState == 'Login') {
       yield PageLogin();
-    } else if(event.pageState == 'Register'){
+    } else if (event.pageState == 'Register') {
       yield PageRegis();
-    } else if(event.pageState == 'Home'){
-      yield PageHome();
-    } else if(event.pageState == 'Items'){
-      yield PageItems();
-    } else{
+    } else {
       yield PageLoading();
     }
+    // else if (event.pageState == 'Home') {
+    //   yield PageHome();
+    // } else if (event.pageState == 'Items') {
+    //   yield PageItems();
+    // }
   }
 }

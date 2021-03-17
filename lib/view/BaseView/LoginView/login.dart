@@ -5,8 +5,6 @@ import 'package:pricer_project/view/BaseView/LoginView/bloc/login_bloc.dart';
 import 'package:pricer_project/view/BaseView/PageManagement/page_bloc.dart';
 import 'package:pricer_project/view/widget/snackbar_notification.dart';
 
-// import 'package:pricer_project/main.dart';
-
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -16,21 +14,26 @@ class _LoginPageState extends State<LoginPage> {
   String _email;
   String _password;
 
+  _handleLogin() {
+    if (_email == null || _password == null) {
+      WidgetNotificationSnackbar().render(context: context, color: Colors.red, message: 'Please Input Username or Password');
+    } else {
+      BlocProvider.of<LoginBloc>(context).add(LoginAccount(email: _email, password: _password));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is LoginFailure) {
-          WidgetNotificationSnackbar().render(
-              context: context, color: Colors.red, message: state.message);
+          WidgetNotificationSnackbar().render(context: context, color: Colors.red, message: state.message);
         }
         if (state is LoginSucces) {
-          BlocProvider.of<PageBloc>(context)
-              .add(SelectedPage(pageState: 'Home'));
+          BlocProvider.of<PageBloc>(context).add(SelectedPage(pageState: 'Home'));
         }
       },
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
@@ -71,8 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                 filled: true,
                 isDense: true,
                 contentPadding: EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 10.0),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0)),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
               ),
             ),
           ),
@@ -96,8 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                 filled: true,
                 isDense: true,
                 contentPadding: EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 10.0),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0)),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
               ),
             ),
           ),
@@ -105,8 +106,7 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.only(top: 40.0, right: 40.0, left: 40.0),
             child: RaisedButton(
               color: Colors.orange[600],
-              shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(8.0)),
+              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(8.0)),
               child: Text(
                 'LOG IN',
                 style: TextStyle(color: Colors.white),
@@ -114,65 +114,49 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () => _handleLogin(),
             ),
           ),
-          Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[],
-                ),
-                Row(children: <Widget>[
-                  Expanded(
-                    child: new Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 10.0),
-                        child: Divider(
-                          color: Colors.grey[500],
-                          height: 36,
-                        )),
-                  ),
-                  Text("or"),
-                  Expanded(
-                    child: new Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 10.0),
-                        child: Divider(
-                          color: Colors.grey[500],
-                          height: 36,
-                        )),
-                  ),
-                ]),
-                Row(
-                  children: <Widget>[],
-                ),
-              ]),
+          Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            Row(
+              children: <Widget>[],
+            ),
+            Row(children: <Widget>[
+              Expanded(
+                child: new Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+                    child: Divider(
+                      color: Colors.grey[500],
+                      height: 36,
+                    )),
+              ),
+              Text("or"),
+              Expanded(
+                child: new Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+                    child: Divider(
+                      color: Colors.grey[500],
+                      height: 36,
+                    )),
+              ),
+            ]),
+            Row(
+              children: <Widget>[],
+            ),
+          ]),
           Padding(
             padding: const EdgeInsets.only(right: 40.0, left: 40.0),
             child: RaisedButton(
               color: Colors.white,
               // textColor: Colors.white,
               // padding: const EdgeInsets.all(16),
-              shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(8.0)),
+              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(8.0)),
               child: Text(
                 'REGISTER',
                 style: TextStyle(color: Colors.grey[700]),
               ),
-              onPressed: () => BlocProvider.of<PageBloc>(context)
-                  .add(SelectedPage(pageState: 'Register')),
+              onPressed: () => BlocProvider.of<PageBloc>(context).add(SelectedPage(pageState: 'Register')),
             ),
           ),
         ],
       ),
     );
-  }
-
-  _handleLogin() {
-    if (_email == null || _password == null) {
-      WidgetNotificationSnackbar().render(
-          context: context,
-          color: Colors.red,
-          message: 'Please Input Username or Password');
-    } else {
-      BlocProvider.of<LoginBloc>(context)
-          .add(LoginAccount(email: _email, password: _password));
-    }
   }
 }

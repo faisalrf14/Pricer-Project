@@ -1,25 +1,13 @@
-// import 'package:attendance_admin/data/dataproviders/dataproviders.dart';
-// import 'package:attendance_admin/models/models.dart';
-// import 'package:attendance_admin/ui/logic/service/services.dart';
+import 'package:pricer_project/data/dataprovider/api.dart';
+import 'package:pricer_project/models/login_response.dart';
 
-// class UserRepository {
-//   final AttendanceApi attendanceApi;
-//   AdminRepository({this.attendanceApi});
+class UserRepository {
+  final PricerApi pricerApi;
+  UserRepository({this.pricerApi});
 
-//   // Admin Login
-//   Future<SignInResponse> signIn(Admin admin) async {
-//     SignInResponse signInResponse = await attendanceApi.signInAdmin(admin);
-//     return signInResponse;
-//   }
-
-//   // Current Admin Info
-//   Future<String> getCurrentSignInInfo() async {
-//     String adminEmail = await SessionManagerService().getAdmin();
-//     return adminEmail;
-//   }
-
-//   // Logout Admin Info
-//   Future<String> logOutAdmin() async {
-//     return null;
-//   }
-// }
+  // user login
+  Future<LoginResponse> signInWithEmailAndPassword({String email, String password}) async {
+    LoginResponse loginResponse = await pricerApi.signInWithEmailAndPassword(email: email, password: password);
+    return loginResponse;
+  }
+}

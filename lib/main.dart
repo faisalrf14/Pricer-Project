@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pricer_project/data/dataprovider/api.dart';
+import 'package:pricer_project/data/repositories/user_repositories.dart';
+import 'package:pricer_project/logic/auth/auth_bloc.dart';
 import 'package:pricer_project/logic/simple_bloc_observer.dart';
+import 'package:pricer_project/view/BaseView/HomeView/home.dart';
 import 'package:pricer_project/view/BaseView/LoginView/bloc/login_bloc.dart';
 import 'package:pricer_project/view/BaseView/PageManagement/page_bloc.dart';
 import 'package:pricer_project/view/BaseView/base_view.dart';
+import 'package:pricer_project/view/widget/snackbar_notification.dart';
 
 Future<void> main() async {
   try {
@@ -12,21 +17,48 @@ Future<void> main() async {
     print(e);
   }
 
-  runApp(MultiBlocProvider(
+  runApp(MultiRepositoryProvider(
     providers: [
-      BlocProvider<PageBloc>(create: (context) => PageBloc()),
-      BlocProvider<LoginBloc>(create: (context) => LoginBloc()),
+      RepositoryProvider<UserRepository>(create: (context) => UserRepository(pricerApi: PricerApi())),
     ],
-    child: MyApp(),
+    child: MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(create: (context) => AuthBloc(userRepository: UserRepository(pricerApi: PricerApi()))..add(AppLoaded())),
+        BlocProvider<LoginBloc>(create: (context) => LoginBloc(userRepository: UserRepository(pricerApi: PricerApi()), authBloc: BlocProvider.of<AuthBloc>(context))),
+        BlocProvider<PageBloc>(create: (context) => PageBloc()),
+      ],
+      child: MyApp(),
+    ),
   ));
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<PageBloc>(context).add(SelectedPage(pageState: 'Home'));
     return MaterialApp(
-      home: BaseView(),
+      home: Scaffold(
+        resizeToAvoidBottomPadding: false,
+        body: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            if (state is AuthAuthenticated) {
+              return MyHome();
+            }
+            if (state is AuthNotAuthenticated) {
+              BlocProvider.of<PageBloc>(context).add(SelectedPage(pageState: 'Login'));
+              return BaseView();
+            }
+            if (state is AuthFailure) {
+              WidgetNotificationSnackbar().render(context: context, color: Colors.red, message: state.message);
+            }
+
+            return Container(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
