@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pricer_project/view/widget/category_layout.dart/furniture_layout.dart';
-import 'package:pricer_project/view/widget/category_layout.dart/hobby_layout.dart';
-import 'package:pricer_project/view/widget/category_layout.dart/laptop_layout.dart';
-import 'package:pricer_project/view/widget/category_layout.dart/phone_layout.dart';
-import 'package:pricer_project/view/widget/layout.dart';
+import 'package:pricer_project/view/HomeView/widget/category_layout.dart/furniture_layout.dart';
+import 'package:pricer_project/view/HomeView/widget/category_layout.dart/hobby_layout.dart';
+import 'package:pricer_project/view/HomeView/widget/category_layout.dart/laptop_layout.dart';
+import 'package:pricer_project/view/HomeView/widget/category_layout.dart/phone_layout.dart';
+import 'package:pricer_project/view/HomeView/widget/layout.dart';
 
 class Dashboard extends StatelessWidget {
   @override

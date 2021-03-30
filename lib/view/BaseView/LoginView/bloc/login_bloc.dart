@@ -33,7 +33,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       LoginResponse loginResponse = await userRepository.signInWithEmailAndPassword(email: event.email, password: event.password);
       if (loginResponse.message.toLowerCase() == 'login success') {
         authBloc.add(UserLoggedIn(userEmail: event.email));
-        yield LoginSucces();
+        yield LoginSuccess();
       } else {
         yield LoginFailure(message: loginResponse.message.replaceAll(new RegExp(r'[\(\[].*?[\)\]]'), ''));
       }

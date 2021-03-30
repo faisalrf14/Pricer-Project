@@ -25,10 +25,5 @@ class PageBloc extends Bloc<PageEvent, PageState> {
     } else {
       yield PageLoading();
     }
-    // else if (event.pageState == 'Home') {
-    //   yield PageHome();
-    // } else if (event.pageState == 'Items') {
-    //   yield PageItems();
-    // }
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pricer_project/view/BaseView/HomeView/grid_dashboard.dart';
-import 'package:pricer_project/view/widget/search_bar.dart';
+import 'package:pricer_project/view/HomeView/grid_dashboard.dart';
+import 'package:pricer_project/view/HomeView/widget/search_bar.dart';
 
 class Layout extends StatefulWidget {
   @override
@@ -24,7 +24,10 @@ class _LayoutState extends State<Layout> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[SearchBar(), widget.content],
+            children: <Widget>[
+              SearchBar(),
+              widget.content,
+            ],
           ),
         ),
       ),
