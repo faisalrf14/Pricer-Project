@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:pricer_project/data/constant.dart';
 import 'package:pricer_project/models/login_response.dart';
 import 'package:pricer_project/models/request_product.dart';
 import 'package:pricer_project/models/tokped/tokped_response.dart';
@@ -10,9 +11,12 @@ import 'package:http/http.dart' as http;
 class PricerApi {
   PricerApi();
 
-  Future<LoginResponse> signInWithEmailAndPassword({String email, String password}) async {
+  Future<LoginResponse> signInWithEmailAndPassword(
+      {String email, String password}) async {
     try {
-      LoginResponse loginResponse = await FireBaseAuthService.signInWithEmailAndPassword(email: email, password: password);
+      LoginResponse loginResponse =
+          await FireBaseAuthService.signInWithEmailAndPassword(
+              email: email, password: password);
       if (loginResponse.user != null) {
         SessionManagerService().setUser(loginResponse.user);
         return LoginResponse(message: "Login success");
@@ -32,7 +36,7 @@ class PricerApi {
       Map<String, String> headers = {'Content-type': 'application/json'};
 
       var response = await http.post(
-        "http://localhost:8080/tokopedia/search",
+        baseAPI + "tokopedia/search",
         body: jsonEncode(request.toJson()),
         headers: headers,
       );
@@ -49,7 +53,6 @@ class PricerApi {
         );
         return response;
       } else {
-        var responseBody = jsonDecode(response.body);
         TokpedResponse basicResponse = TokpedResponse.fromJson(responseBody);
         return basicResponse;
       }

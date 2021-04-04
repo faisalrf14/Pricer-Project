@@ -1,9 +1,9 @@
-import 'package:pricer_project/models/tokped/tokped_product.dart';
+import 'package:pricer_project/models/tokped/simple_data.dart';
 
 class TokpedResponse {
   final int responseCode;
   final String responseMessage;
-  final List<TokpedProduct> data;
+  final SimpleData data;
 
   TokpedResponse({this.responseCode, this.responseMessage, this.data});
 
@@ -16,21 +16,10 @@ class TokpedResponse {
   }
 
   factory TokpedResponse.fromJson(Map<String, dynamic> json) {
-    if (json['data'] != null) {
-      var tagObjsJson = json['data'] as List;
-      List<TokpedProduct> _product = tagObjsJson.map((e) => TokpedProduct.fromJson(e)).toList();
-
-      return TokpedResponse(
-        responseCode: json['responseCode'],
-        responseMessage: json['responseMessage'],
-        data: _product,
-      );
-    } else {
-      return TokpedResponse(
-        responseCode: json['responseCode'],
-        responseMessage: json['responseMessage'],
-        data: json['data'],
-      );
-    }
+    return TokpedResponse(
+      responseCode: json['responseCode'],
+      responseMessage: json['responseMessage'],
+      data: SimpleData.fromJson(json['data']),
+    );
   }
 }

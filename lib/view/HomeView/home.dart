@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pricer_project/logic/auth/auth_bloc.dart';
 import 'package:pricer_project/view/HomeView/grid_dashboard.dart';
 
+import 'widget/search_bar/search_bar.dart';
+
 class MyHome extends StatefulWidget {
   final String email;
 
@@ -39,37 +41,37 @@ class _MyHomeState extends State<MyHome> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      child: Column(
+      child: Stack(
+        fit: StackFit.expand,
         children: <Widget>[
-          SizedBox(
-            height: 110,
-          ),
           Padding(
-            padding: EdgeInsets.only(left: 16, right: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Welcome! " + this.email ?? "",
-                      style: TextStyle(fontSize: 20),
-                    )
-                  ],
+            padding: const EdgeInsets.only(top: 50),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Welcome! " + this.email ?? "",
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.logout),
+                        onPressed: () => _handleLogout(),
+                      ),
+                    ],
+                  ),
                 ),
-                IconButton(
-                  alignment: Alignment.topCenter,
-                  icon: Icon(Icons.logout),
-                  onPressed: () => _handleLogout(),
-                ),
+                Dashboard(),
               ],
             ),
           ),
-          SizedBox(height: 40),
-          Dashboard(),
+          SearchBar(),
         ],
       ),
     );

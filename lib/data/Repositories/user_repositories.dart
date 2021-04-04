@@ -6,8 +6,10 @@ class UserRepository {
   UserRepository({this.pricerApi});
 
   // user login
-  Future<LoginResponse> signInWithEmailAndPassword({String email, String password}) async {
-    LoginResponse loginResponse = await pricerApi.signInWithEmailAndPassword(email: email, password: password);
+  Future<LoginResponse> signInWithEmailAndPassword(
+      {String email, String password}) async {
+    LoginResponse loginResponse = await pricerApi.signInWithEmailAndPassword(
+        email: email, password: password);
     return loginResponse;
   }
 }

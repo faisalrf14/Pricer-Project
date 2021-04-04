@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pricer_project/data/constant.dart';
 
 class FurniturePage extends StatefulWidget {
   @override
@@ -10,33 +11,6 @@ class FurniturePage extends StatefulWidget {
 class _FurniturePageState extends State<FurniturePage> {
   @override
   Widget build(BuildContext context) {
-    List<Items> list = [
-      new Items(
-        title: "Hobby",
-        image: "assets/images/gaming.png",
-      ),
-      new Items(
-        title: "Laptop",
-        image: "assets/images/computer.png",
-      ),
-      new Items(
-        title: "Furniture",
-        image: "assets/images/furniture.png",
-      ),
-      new Items(
-        title: "Hobby",
-        image: "assets/images/gaming.png",
-      ),
-      new Items(
-        title: "Laptop",
-        image: "assets/images/computer.png",
-      ),
-      new Items(
-        title: "Furniture",
-        image: "assets/images/furniture.png",
-      ),
-    ];
-
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,7 +127,7 @@ class _FurniturePageState extends State<FurniturePage> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 18,
                   mainAxisSpacing: 18,
-                  children: list.map((data) {
+                  children: categoryList.map((data) {
                     return GestureDetector(
                       child: Container(
                         decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(10)),
@@ -181,13 +155,4 @@ class _FurniturePageState extends State<FurniturePage> {
       ),
     );
   }
-}
-
-class Items {
-  String title;
-  String name;
-  String image;
-  Function onPressed;
-
-  Items({this.title, this.name, this.image, this.onPressed});
 }

@@ -1,22 +1,20 @@
 class TokpedProduct {
   final int id;
   final String name;
-  final String categoryName;
   final String imageUrl;
   final String price;
-  final String originalPrice;
+  final String priceStr;
   final String url;
 
-  TokpedProduct({this.id, this.name, this.categoryName, this.imageUrl, this.price, this.originalPrice, this.url});
+  TokpedProduct(
+      {this.id, this.name, this.imageUrl, this.price, this.priceStr, this.url});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
-    data['categoryName'] = this.categoryName;
     data['imageUrl'] = this.imageUrl;
     data['price'] = this.price;
-    data['originalPrice'] = this.originalPrice;
     data['url'] = this.url;
     return data;
   }
@@ -25,10 +23,9 @@ class TokpedProduct {
     return TokpedProduct(
       id: json['id'],
       name: json['name'],
-      categoryName: json['categoryName'],
       imageUrl: json['imageUrl'],
-      price: json['price'],
-      originalPrice: json['originalPrice'],
+      price: json['price'].toString(),
+      priceStr: json['priceStr'],
       url: json['url'],
     );
   }
