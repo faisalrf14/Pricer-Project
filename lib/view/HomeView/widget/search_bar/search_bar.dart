@@ -11,11 +11,13 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
   List<Keyword> _suggestions;
+  String _query;
 
   @override
   void initState() {
     super.initState();
     setState(() {
+      _query = "";
       _suggestions = [];
     });
   }
@@ -34,7 +36,8 @@ class _SearchBarState extends State<SearchBar> {
         }
       },
       child: FloatingSearchBar(
-        hint: 'Search...',
+        clearQueryOnClose: false,
+        hint: _query == '' ? 'Search...' : _query,
         scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
         transitionDuration: const Duration(milliseconds: 800),
         transitionCurve: Curves.easeInOut,
@@ -44,8 +47,14 @@ class _SearchBarState extends State<SearchBar> {
         width: isPortrait ? 600 : 500,
         debounceDelay: const Duration(milliseconds: 500),
         onQueryChanged: (query) async {
+          setState(() {
+            _query = query;
+          });
           BlocProvider.of<SearchBloc>(context)
               .add(GetTokpedSuggestion(query: query, limit: "10"));
+
+          BlocProvider.of<SearchBloc>(context)
+              .add(GetTokpedProduct(query: _query, limit: "10"));
         },
         transition: SlideFadeFloatingSearchBarTransition(),
         actions: [
@@ -98,8 +107,11 @@ class _SearchBarState extends State<SearchBar> {
                       ),
                     ),
                     onTap: () {
+                      setState(() {
+                        _query = e.keyword;
+                      });
                       BlocProvider.of<SearchBloc>(context)
-              .add(GetTokpedProduct(query: e.keyword, limit: "10"));
+                          .add(GetTokpedProduct(query: _query, limit: "10"));
                     },
                   );
                 }).toList(),

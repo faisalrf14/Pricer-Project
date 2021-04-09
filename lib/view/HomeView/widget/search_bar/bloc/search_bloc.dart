@@ -28,6 +28,20 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     return _suggestions;
   }
 
+  Future<List<TokpedProduct>> getProductList(
+      {String query, String limit}) async {
+    List<TokpedProduct> _listProduct;
+    try {
+      TokpedResponse tokpedResponse =
+          await tokpedRepositories.getTokpedProduct(query: query, limit: limit);
+      _listProduct = tokpedResponse.data.products;
+    } catch (e) {
+      print(e);
+      _listProduct = [];
+    }
+    return _listProduct;
+  }
+
   @override
   Stream<SearchState> mapEventToState(
     SearchEvent event,
@@ -49,7 +63,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     yield SearchListSuggestionDone(suggestion: _suggestions);
   }
 
-  Stream<SearchState> _mapGetTokpedProductToState(GetTokpedProduct event) async* {
-    // List<TokpedProduct> _searchResult = await 
+  Stream<SearchState> _mapGetTokpedProductToState(
+      GetTokpedProduct event) async* {
+    yield SearchListLoading();
+
+    List<TokpedProduct> _searchResult =
+        await getProductList(query: event.query, limit: event.limit);
+    yield SearchListDone(listTokpedProduct: _searchResult);
   }
 }
