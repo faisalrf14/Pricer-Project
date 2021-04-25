@@ -2,25 +2,24 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pricer_project/data/repositories/tokped_repositories.dart';
-import 'package:pricer_project/models/tokped/keyword.dart';
-import 'package:pricer_project/models/tokped/tokped_product.dart';
-import 'package:pricer_project/models/tokped/tokped_response.dart';
+import 'package:pricer_project/data/repositories/search_repositories.dart';
+import 'package:pricer_project/models/main_response/keyword.dart';
+import 'package:pricer_project/models/main_response/main_products.dart';
+import 'package:pricer_project/models/main_response/main_response.dart';
 
 part 'search_event.dart';
 part 'search_state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
-  final TokpedRepositories tokpedRepositories;
+  final SearchRepositories searchRepositories;
 
-  SearchBloc({this.tokpedRepositories}) : super(SearchInitial());
+  SearchBloc({this.searchRepositories}) : super(SearchInitial());
 
   Future<List<Keyword>> getSuggestion({String query, String limit}) async {
     List<Keyword> _suggestions;
     try {
-      TokpedResponse tokpedResponse =
-          await tokpedRepositories.getTokpedProduct(query: query, limit: limit);
-      _suggestions = tokpedResponse.data.related.otherRelated;
+      MainResponse mainResponse = await searchRepositories.getMainProducts(query: query, limit: limit);
+      _suggestions = mainResponse.data.related.otherRelated;
     } catch (e) {
       print(e);
       _suggestions = [];
@@ -28,13 +27,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     return _suggestions;
   }
 
-  Future<List<TokpedProduct>> getProductList(
-      {String query, String limit}) async {
-    List<TokpedProduct> _listProduct;
+  Future<List<MainProducts>> getProductList({String query, String limit}) async {
+    List<MainProducts> _listProduct;
     try {
-      TokpedResponse tokpedResponse =
-          await tokpedRepositories.getTokpedProduct(query: query, limit: limit);
-      _listProduct = tokpedResponse.data.products;
+      MainResponse mainResponse = await searchRepositories.getMainProducts(query: query, limit: limit);
+      _listProduct = mainResponse.data.products;
     } catch (e) {
       print(e);
       _listProduct = [];
@@ -54,21 +51,21 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     }
   }
 
-  Stream<SearchState> _mapGetTokpedSuggestionToState(
-      GetTokpedSuggestion event) async* {
+  Stream<SearchState> _mapGetTokpedSuggestionToState(GetTokpedSuggestion event) async* {
     yield SearchListLoading();
 
-    List<Keyword> _suggestions =
-        await getSuggestion(query: event.query, limit: event.limit);
+    List<Keyword> _suggestions = await getSuggestion(query: event.query, limit: event.limit);
     yield SearchListSuggestionDone(suggestion: _suggestions);
   }
 
-  Stream<SearchState> _mapGetTokpedProductToState(
-      GetTokpedProduct event) async* {
+  Stream<SearchState> _mapGetTokpedProductToState(GetTokpedProduct event) async* {
     yield SearchListLoading();
 
-    List<TokpedProduct> _searchResult =
-        await getProductList(query: event.query, limit: event.limit);
-    yield SearchListDone(listTokpedProduct: _searchResult);
+    List<MainProducts> _searchResult = await getProductList(query: event.query, limit: event.limit);
+    if (_searchResult.length == 0) {
+      yield SearchInitial();
+    } else {
+      yield SearchListDone(listProducts: _searchResult);
+    }
   }
 }

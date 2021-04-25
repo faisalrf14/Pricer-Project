@@ -12,12 +12,12 @@ class SearchInitial extends SearchState {}
 class SearchListLoading extends SearchState {}
 
 class SearchListDone extends SearchState {
-  final List<TokpedProduct> listTokpedProduct;
+  final List<MainProducts> listProducts;
 
-  SearchListDone({this.listTokpedProduct});
+  SearchListDone({this.listProducts});
 
   @override
-  List<Object> get props => [listTokpedProduct];
+  List<Object> get props => [listProducts];
 }
 
 class SearchListFailure extends SearchState {

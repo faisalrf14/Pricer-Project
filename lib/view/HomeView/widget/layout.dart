@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pricer_project/view/HomeView/widget/search_bar/search_bar.dart';
 
 class Layout extends StatefulWidget {
   @override
@@ -17,21 +16,11 @@ class _LayoutState extends State<Layout> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-          title: Text(widget.appbar),
-          centerTitle: true,
-          backgroundColor: Colors.red),
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              SearchBar(),
-              widget.content,
-            ],
-          ),
-        ),
+        title: Text(widget.appbar),
+        centerTitle: true,
+        backgroundColor: Colors.red,
       ),
+      body: widget.content,
     );
   }
 }
