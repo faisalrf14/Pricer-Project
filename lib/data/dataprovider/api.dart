@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:pricer_project/data/constant.dart';
 import 'package:pricer_project/models/login_response.dart';
+import 'package:pricer_project/models/main_response/main_response.dart';
 import 'package:pricer_project/models/request_product.dart';
 import 'package:pricer_project/models/shopee/shopee_response.dart';
 import 'package:pricer_project/models/tokped/tokped_response.dart';
@@ -23,6 +24,39 @@ class PricerApi {
       }
     } catch (e) {
       print(e.toString());
+      throw Exception('Failure');
+    }
+  }
+
+  Future<MainResponse> getMainProducts({String query, String limit}) async {
+    try {
+      RequestProduct request = new RequestProduct(query: query, limit: limit);
+
+      Map<String, String> headers = {'Content-type': 'application/json'};
+
+      var response = await http.post(
+        baseAPI + "main/search",
+        body: jsonEncode(request.toJson()),
+        headers: headers,
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Failure');
+      }
+
+      var responseBody = jsonDecode(response.body);
+      if (responseBody['responseCode'] != 200) {
+        MainResponse response = new MainResponse(
+          responseCode: 400,
+          responseMessage: responseBody['responseMessage'],
+        );
+        return response;
+      } else {
+        MainResponse basicResponse = MainResponse.fromJson(responseBody);
+        return basicResponse;
+      }
+    } catch (e) {
+      print(e);
       throw Exception('Failure');
     }
   }

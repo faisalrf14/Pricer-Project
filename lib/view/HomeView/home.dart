@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pricer_project/data/constant.dart';
 import 'package:pricer_project/logic/auth/auth_bloc.dart';
 import 'package:pricer_project/view/HomeView/grid_dashboard.dart';
 import 'package:pricer_project/view/HomeView/widget/search_bar/bloc/search_bloc.dart';
@@ -67,79 +68,52 @@ class _MyHomeState extends State<MyHome> {
                   ],
                 ),
               ),
-              Row(
-                children: [
-                  olShopCompare(
-                    imageSrc: "assets/images/tokpedimg.png",
-                    title: "Tokopedia",
-                  ),
-                  olShopCompare(
-                    imageSrc: "assets/images/shopeeimg.jpeg",
-                    title: "Shopee",
-                  ),
-                ],
-              ),
               BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
                 if (state is SearchListDone) {
                   return Flexible(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: state.listTokpedProduct.map((e) {
-                          return Row(
+                    child: GridView.count(
+                      childAspectRatio: 1.0,
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      children: state.listProducts.map((e) {
+                        return Card(
+                          clipBehavior: Clip.antiAlias,
+                          child: Column(
                             children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                child: Card(
-                                  clipBehavior: Clip.antiAlias,
-                                  child: Column(
-                                    children: [
-                                      Image.network(
-                                        e.imageUrl,
-                                        width: 100,
-                                        height: 100,
-                                      ),
-                                      ListTile(
-                                        title: Text(e.name),
-                                        subtitle: Text(
-                                          e.price,
-                                          style: TextStyle(
-                                            color:
-                                                Colors.black.withOpacity(0.6),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                              Image.network(
+                                e.imageUrl ?? imageNotFound,
+                                width: 100,
+                                height: 100,
                               ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                child: Card(
-                                  clipBehavior: Clip.antiAlias,
-                                  child: Column(
+                              ListTile(
+                                  title: Text(
+                                    e.name,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                  subtitle: Row(
                                     children: [
-                                      Image.network(
-                                        e.imageUrl,
-                                        width: 100,
-                                        height: 100,
+                                      Image.asset(
+                                        e.originOlShop == "tokopedia" ? imageTokpedLogo : imageShopeeLogo,
+                                        width: 30,
                                       ),
-                                      ListTile(
-                                        title: Text(e.name),
-                                        subtitle: Text(
-                                          e.price,
-                                          style: TextStyle(
-                                              color: Colors.black
-                                                  .withOpacity(0.6)),
+                                      Text(
+                                        e.price,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
                                         ),
                                       ),
                                     ],
-                                  ),
-                                ),
-                              )
+                                  )),
                             ],
-                          );
-                        }).toList(),
-                      ),
+                          ),
+                        );
+                      }).toList(),
                     ),
                   );
                 }
@@ -171,3 +145,94 @@ class _MyHomeState extends State<MyHome> {
     );
   }
 }
+
+// Row(
+//                 children: [
+//                   olShopCompare(
+//                     imageSrc: "assets/images/tokpedimg.png",
+//                     title: "Tokopedia",
+//                   ),
+//                   olShopCompare(
+//                     imageSrc: "assets/images/shopeeimg.jpeg",
+//                     title: "Shopee",
+//                   ),
+//                 ],
+//               ),
+
+// Column(
+                          //   children: state.listProducts.map((e) {
+                          //     return Container(
+                          //       width: MediaQuery.of(context).size.width * 0.5,
+                          //       child: Card(
+                          //         clipBehavior: Clip.antiAlias,
+                          //         child: Column(
+                          //           children: [
+                          //             Image.network(
+                          //               e.imageUrl ?? imageNotFound,
+                          //               width: 100,
+                          //               height: 100,
+                          //             ),
+                          //             ListTile(
+                          //               title: Text(e.name),
+                          //               subtitle: Text(
+                          //                 e.price,
+                          //                 style: TextStyle(
+                          //                   color: Colors.black.withOpacity(0.6),
+                          //                 ),
+                          //               ),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //     );
+                          // return Row(
+                          //   children: [
+                          //     Container(
+                          //       width: MediaQuery.of(context).size.width * 0.5,
+                          //       child: Card(
+                          //         clipBehavior: Clip.antiAlias,
+                          //         child: Column(
+                          //           children: [
+                          //             Image.network(
+                          //               e.imageUrl,
+                          //               width: 100,
+                          //               height: 100,
+                          //             ),
+                          //             ListTile(
+                          //               title: Text(e.name),
+                          //               subtitle: Text(
+                          //                 e.price,
+                          //                 style: TextStyle(
+                          //                   color: Colors.black.withOpacity(0.6),
+                          //                 ),
+                          //               ),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     Container(
+                          //       width: MediaQuery.of(context).size.width * 0.5,
+                          //       child: Card(
+                          //         clipBehavior: Clip.antiAlias,
+                          //         child: Column(
+                          //           children: [
+                          //             Image.network(
+                          //               e.imageUrl,
+                          //               width: 100,
+                          //               height: 100,
+                          //             ),
+                          //             ListTile(
+                          //               title: Text(e.name),
+                          //               subtitle: Text(
+                          //                 e.price,
+                          //                 style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                          //               ),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //     )
+                          //   ],
+                          // );
+                          // }).toList(),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:pricer_project/models/tokped/keyword.dart';
+import 'package:pricer_project/models/main_response/keyword.dart';
 import 'package:pricer_project/view/HomeView/widget/search_bar/bloc/search_bloc.dart';
 
 class SearchBar extends StatefulWidget {
@@ -17,15 +17,14 @@ class _SearchBarState extends State<SearchBar> {
   void initState() {
     super.initState();
     setState(() {
-      _query = "";
+      _query = '';
       _suggestions = [];
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
+    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
     return BlocListener<SearchBloc, SearchState>(
       listener: (_, state) {
@@ -50,11 +49,9 @@ class _SearchBarState extends State<SearchBar> {
           setState(() {
             _query = query;
           });
-          BlocProvider.of<SearchBloc>(context)
-              .add(GetTokpedSuggestion(query: query, limit: "10"));
+          BlocProvider.of<SearchBloc>(context).add(GetTokpedSuggestion(query: _query, limit: "10"));
 
-          BlocProvider.of<SearchBloc>(context)
-              .add(GetTokpedProduct(query: _query, limit: "10"));
+          BlocProvider.of<SearchBloc>(context).add(GetTokpedProduct(query: _query, limit: "10"));
         },
         transition: SlideFadeFloatingSearchBarTransition(),
         actions: [
@@ -110,8 +107,7 @@ class _SearchBarState extends State<SearchBar> {
                       setState(() {
                         _query = e.keyword;
                       });
-                      BlocProvider.of<SearchBloc>(context)
-                          .add(GetTokpedProduct(query: _query, limit: "10"));
+                      BlocProvider.of<SearchBloc>(context).add(GetTokpedProduct(query: _query, limit: "10"));
                     },
                   );
                 }).toList(),

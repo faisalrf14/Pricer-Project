@@ -1,11 +1,11 @@
+import 'package:pricer_project/models/main_response/main_products.dart';
 import 'package:pricer_project/models/main_response/related.dart';
-import 'package:pricer_project/models/tokped/tokped_product.dart';
 
-class SimpleData {
+class MainData {
   final Related related;
-  final List<TokpedProduct> products;
+  final List<MainProducts> products;
 
-  SimpleData({this.related, this.products});
+  MainData({this.related, this.products});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
@@ -14,17 +14,17 @@ class SimpleData {
     return data;
   }
 
-  factory SimpleData.fromJson(Map<String, dynamic> json) {
+  factory MainData.fromJson(Map<String, dynamic> json) {
     if (json['products'] != null) {
       var tagObjsJson = json['products'] as List;
-      List<TokpedProduct> _product = tagObjsJson.map((e) => TokpedProduct.fromJson(e)).toList();
+      List<MainProducts> _product = tagObjsJson.map((e) => MainProducts.fromJson(e)).toList();
 
-      return SimpleData(
+      return MainData(
         related: Related.fromJson(json['related']),
         products: _product,
       );
     } else {
-      return SimpleData(
+      return MainData(
         related: Related.fromJson(json['related']),
         products: json['products'],
       );

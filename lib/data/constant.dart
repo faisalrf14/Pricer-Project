@@ -12,10 +12,9 @@ class CategoryItem {
   String appBarTitle;
   String name;
   String image;
-  Widget onPressed;
+  Widget content;
 
-  CategoryItem(
-      {this.title, this.appBarTitle, this.name, this.image, this.onPressed});
+  CategoryItem({this.title, this.appBarTitle, this.name, this.image, this.content});
 }
 
 List<CategoryItem> categoryList = [
@@ -23,27 +22,31 @@ List<CategoryItem> categoryList = [
     title: "Hobby",
     appBarTitle: 'Hobby Category',
     image: "assets/images/hobby.png",
-    onPressed: HobbyPage(),
+    content: HobbyPage(),
   ),
   new CategoryItem(
     title: "Mobile Phone",
     appBarTitle: 'Mobile Phone Category',
     image: "assets/images/mobile.png",
-    onPressed: PhonePage(),
+    content: PhonePage(),
   ),
   new CategoryItem(
     title: "Furniture",
     appBarTitle: 'Furniture Category',
     image: "assets/images/furniture.png",
-    onPressed: FurniturePage(),
+    content: FurniturePage(),
   ),
   new CategoryItem(
     title: "Laptop",
     appBarTitle: 'Laptop Category',
     image: "assets/images/laptop.png",
-    onPressed: LaptopPage(),
+    content: LaptopPage(),
   ),
 ];
+
+final imageNotFound = "https://cdn.icon-icons.com/icons2/1674/PNG/512/close_111152.png";
+final imageTokpedLogo = "assets/images/tokpedimg.png";
+final imageShopeeLogo = "assets/images/shopeeimg.jpeg";
 
 // class DetailItem {
 //   String title;
