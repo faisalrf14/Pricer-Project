@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pricer_project/data/constant.dart';
 import 'package:pricer_project/view/HomeView/widget/category_layout/bloc/category_bloc.dart';
+import 'package:pricer_project/view/Widget/clickable_card.dart';
 
 class LaptopPage extends StatefulWidget {
   @override
@@ -117,41 +118,7 @@ class _LaptopPageState extends State<LaptopPage> {
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
                     children: state.listProducts.map((e) {
-                      return Card(
-                        clipBehavior: Clip.antiAlias,
-                        child: Column(
-                          children: [
-                            Image.network(
-                              e.imageUrl ?? imageNotFound,
-                              width: 100,
-                              height: 100,
-                            ),
-                            ListTile(
-                                title: Text(
-                                  e.name,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                                subtitle: Row(
-                                  children: [
-                                    Image.asset(
-                                      e.originOlShop == "tokopedia" ? imageTokpedLogo : imageShopeeLogo,
-                                      width: 30,
-                                    ),
-                                    Text(
-                                      e.price,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                          ],
-                        ),
-                      );
+                      return ClickableCard(mainProducts: e);
                     }).toList(),
                   ),
                 );
