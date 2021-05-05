@@ -9,42 +9,55 @@ final baseAPI = "http://10.0.2.2:3000/";
 
 class CategoryItem {
   String title;
+  String parentCategory;
   String appBarTitle;
   String name;
   String image;
   Widget content;
 
-  CategoryItem({this.title, this.appBarTitle, this.name, this.image, this.content});
+  CategoryItem({
+    this.title,
+    this.parentCategory,
+    this.appBarTitle,
+    this.name,
+    this.image,
+    this.content,
+  });
 }
 
 List<CategoryItem> categoryList = [
   new CategoryItem(
     title: "Hobby",
+    parentCategory: 'hobby',
     appBarTitle: 'Hobby Category',
     image: "assets/images/hobby.png",
     content: HobbyPage(),
   ),
   new CategoryItem(
     title: "Mobile Phone",
+    parentCategory: 'mobilePhone',
     appBarTitle: 'Mobile Phone Category',
     image: "assets/images/mobile.png",
     content: PhonePage(),
   ),
   new CategoryItem(
     title: "Furniture",
+    parentCategory: 'furniture',
     appBarTitle: 'Furniture Category',
     image: "assets/images/furniture.png",
     content: FurniturePage(),
   ),
   new CategoryItem(
     title: "Laptop",
+    parentCategory: 'laptop',
     appBarTitle: 'Laptop Category',
     image: "assets/images/laptop.png",
     content: LaptopPage(),
   ),
 ];
 
-final imageNotFound = "https://cdn.icon-icons.com/icons2/1674/PNG/512/close_111152.png";
+final imageNotFound =
+    "https://cdn.icon-icons.com/icons2/1674/PNG/512/close_111152.png";
 final imageTokpedLogo = "assets/images/tokpedimg.png";
 final imageShopeeLogo = "assets/images/shopeeimg.jpeg";
 

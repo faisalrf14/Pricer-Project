@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pricer_project/data/constant.dart';
-import 'package:pricer_project/view/HomeView/widget/layout.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -15,7 +14,8 @@ class Dashboard extends StatelessWidget {
         children: categoryList.map((data) {
           return GestureDetector(
             child: Container(
-              decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(10)),
+              decoration: BoxDecoration(
+                  color: Colors.red, borderRadius: BorderRadius.circular(10)),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -36,10 +36,7 @@ class Dashboard extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Layout(
-                    appbar: data.appBarTitle,
-                    content: data.content,
-                  ),
+                  builder: (context) => data.content,
                 ),
               );
             },

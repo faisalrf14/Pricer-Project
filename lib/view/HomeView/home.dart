@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pricer_project/data/constant.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pricer_project/logic/auth/auth_bloc.dart';
 import 'package:pricer_project/view/HomeView/grid_dashboard.dart';
 import 'package:pricer_project/view/HomeView/widget/search_bar/bloc/search_bloc.dart';
@@ -72,15 +72,14 @@ class _MyHomeState extends State<MyHome> {
               BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
                 if (state is SearchListDone) {
                   return Flexible(
-                    child: GridView.count(
-                      childAspectRatio: 1.0,
-                      padding: EdgeInsets.only(left: 10, right: 10),
+                    child: StaggeredGridView.countBuilder(
                       crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      children: state.listProducts.map((e) {
-                        return ClickableCard(mainProducts: e);
-                      }).toList(),
+                      itemCount: state.listProducts.length,
+                      itemBuilder: (BuildContext context, int index) =>
+                          ClickableCard(
+                        mainProducts: state.listProducts[index],
+                      ),
+                      staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
                     ),
                   );
                 }
