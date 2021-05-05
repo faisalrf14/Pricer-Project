@@ -11,8 +11,14 @@ class GetListCategoryProducts extends CategoryEvent {
   final String parentCategory;
   final String query;
   final String limit;
+  final bool fromLow;
 
-  GetListCategoryProducts({this.parentCategory, this.query, this.limit});
+  GetListCategoryProducts({
+    this.parentCategory,
+    this.query,
+    this.limit,
+    this.fromLow,
+  });
 
   @override
   List<Object> get props => [query, limit];

@@ -13,9 +13,12 @@ import 'package:http/http.dart' as http;
 class PricerApi {
   PricerApi();
 
-  Future<LoginResponse> signInWithEmailAndPassword({String email, String password}) async {
+  Future<LoginResponse> signInWithEmailAndPassword(
+      {String email, String password}) async {
     try {
-      LoginResponse loginResponse = await FireBaseAuthService.signInWithEmailAndPassword(email: email, password: password);
+      LoginResponse loginResponse =
+          await FireBaseAuthService.signInWithEmailAndPassword(
+              email: email, password: password);
       if (loginResponse.user != null) {
         SessionManagerService().setUser(loginResponse.user);
         return LoginResponse(message: "Login success");
@@ -28,9 +31,17 @@ class PricerApi {
     }
   }
 
-  Future<MainResponse> getMainProducts({String query, String limit}) async {
+  Future<MainResponse> getMainProducts({
+    String query,
+    String limit,
+    bool fromLow,
+  }) async {
     try {
-      RequestProduct request = new RequestProduct(query: query, limit: limit);
+      RequestProduct request = new RequestProduct(
+        query: query,
+        limit: limit,
+        fromLow: fromLow ?? true,
+      );
 
       Map<String, String> headers = {'Content-type': 'application/json'};
 

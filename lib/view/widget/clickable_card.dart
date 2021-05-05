@@ -17,32 +17,34 @@ class ClickableCard extends StatelessWidget {
           children: [
             Image.network(
               mainProducts.imageUrl ?? imageNotFound,
-              width: 100,
-              height: 100,
+              fit: BoxFit.fitWidth,
             ),
             ListTile(
-                title: Text(
-                  mainProducts.name,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: TextStyle(fontSize: 14),
-                ),
-                subtitle: Row(
-                  children: [
-                    Image.asset(
-                      mainProducts.originOlShop == "tokopedia" ? imageTokpedLogo : imageShopeeLogo,
-                      width: 30,
+              title: Text(
+                mainProducts.name,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style: TextStyle(fontSize: 14),
+              ),
+              subtitle: Row(
+                children: [
+                  Image.asset(
+                    mainProducts.originOlShop == "tokopedia"
+                        ? imageTokpedLogo
+                        : imageShopeeLogo,
+                    width: 30,
+                  ),
+                  Text(
+                    mainProducts.price,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
-                    Text(
-                      mainProducts.price,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                )),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -50,10 +52,7 @@ class ClickableCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetailView(
-              productName: mainProducts.name,
-              shopLocation: mainProducts.originOlShop == 'tokopedia' ? mainProducts.shop.city : mainProducts.shopLocation,
-            ),
+            builder: (context) => DetailView(mainProducts: mainProducts),
           ),
         );
       },

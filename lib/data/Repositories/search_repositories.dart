@@ -6,8 +6,16 @@ class SearchRepositories {
   SearchRepositories({this.pricerApi});
 
   // find product
-  Future<MainResponse> getMainProducts({String query, String limit}) async {
-    MainResponse tokpedResponse = await pricerApi.getMainProducts(query: query, limit: limit);
+  Future<MainResponse> getMainProducts({
+    String query,
+    String limit,
+    bool fromLow,
+  }) async {
+    MainResponse tokpedResponse = await pricerApi.getMainProducts(
+      query: query,
+      limit: limit,
+      fromLow: fromLow,
+    );
     return tokpedResponse;
   }
 }
