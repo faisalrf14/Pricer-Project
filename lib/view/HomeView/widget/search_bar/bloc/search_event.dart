@@ -18,10 +18,12 @@ class GetTokpedSuggestion extends SearchEvent {
 }
 
 class GetTokpedProduct extends SearchEvent {
+  final String parentCategory;
   final String query;
   final String limit;
+  final bool fromLow;
 
-  GetTokpedProduct({this.query, this.limit});
+  GetTokpedProduct({this.query, this.limit, this.fromLow, this.parentCategory});
 
   @override
   List<Object> get props => [query, limit];

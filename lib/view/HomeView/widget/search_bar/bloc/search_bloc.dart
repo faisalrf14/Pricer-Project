@@ -27,10 +27,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     return _suggestions;
   }
 
-  Future<List<MainProducts>> getProductList({String query, String limit}) async {
+  Future<List<MainProducts>> getProductList({String query, String limit, bool fromLow}) async {
     List<MainProducts> _listProduct;
     try {
-      MainResponse mainResponse = await searchRepositories.getMainProducts(query: query, limit: limit);
+      MainResponse mainResponse = await searchRepositories.getMainProducts(query: query, limit: limit, fromLow: fromLow);
       _listProduct = mainResponse.data.products;
     } catch (e) {
       print(e);
@@ -61,11 +61,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   Stream<SearchState> _mapGetTokpedProductToState(GetTokpedProduct event) async* {
     yield SearchListLoading();
 
-    List<MainProducts> _searchResult = await getProductList(query: event.query, limit: event.limit);
+    List<MainProducts> _searchResult = await getProductList(query: event.query, limit: event.limit, fromLow: event.fromLow);
     if (_searchResult.length == 0) {
       yield SearchInitial();
     } else {
-      yield SearchListDone(listProducts: _searchResult);
+      yield SearchListDone(listProducts: _searchResult, query: event.query);
     }
   }
 }

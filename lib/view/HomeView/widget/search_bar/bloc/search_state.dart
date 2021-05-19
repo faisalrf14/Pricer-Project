@@ -13,11 +13,12 @@ class SearchListLoading extends SearchState {}
 
 class SearchListDone extends SearchState {
   final List<MainProducts> listProducts;
+  final String query;
 
-  SearchListDone({this.listProducts});
+  SearchListDone({this.listProducts, this.query});
 
   @override
-  List<Object> get props => [listProducts];
+  List<Object> get props => [listProducts, query];
 }
 
 class SearchListFailure extends SearchState {

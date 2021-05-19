@@ -16,3 +16,13 @@ class LoginAccount extends LoginEvent {
   @override
   List<Object> get props => [email, password];
 }
+
+class RegisterAccount extends LoginEvent {
+  final String email;
+  final String password;
+
+  RegisterAccount({@required this.email, @required this.password});
+
+  @override
+  List<Object> get props => [email, password];
+}

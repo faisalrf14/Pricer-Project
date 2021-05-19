@@ -20,6 +20,9 @@ class MyHome extends StatefulWidget {
 class _MyHomeState extends State<MyHome> {
   String email;
 
+  String _selectedFilter = 'Lowest Price';
+  String _selectedQuery = '';
+
   @override
   void initState() {
     super.initState();
@@ -52,22 +55,51 @@ class _MyHomeState extends State<MyHome> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Welcome! " + this.email ?? "",
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.logout),
-                      onPressed: () => _handleLogout(),
-                    ),
-                  ],
-                ),
+                child: BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
+                  if (state is SearchListDone) {
+                    return DropdownButton(
+                      value: _selectedFilter,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _selectedFilter = newValue;
+                          _selectedQuery = state.query;
+                        });
+                        BlocProvider.of<SearchBloc>(context).add(GetTokpedProduct(
+                          query: _selectedQuery,
+                          limit: "10",
+                          fromLow: _selectedFilter == 'Lowest Price' ? true : false,
+                        ));
+                      },
+                      items: [
+                        DropdownMenuItem(
+                          child: Text('Lowest Price'),
+                          value: 'Lowest Price',
+                        ),
+                        DropdownMenuItem(
+                          child: Text('Highest Price'),
+                          value: 'Highest Price',
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Welcome! " + this.email ?? "",
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.logout),
+                          onPressed: () => _handleLogout(),
+                        ),
+                      ],
+                    );
+                  }
+                }),
               ),
               BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
                 if (state is SearchListDone) {
@@ -75,8 +107,7 @@ class _MyHomeState extends State<MyHome> {
                     child: StaggeredGridView.countBuilder(
                       crossAxisCount: 2,
                       itemCount: state.listProducts.length,
-                      itemBuilder: (BuildContext context, int index) =>
-                          ClickableCard(
+                      itemBuilder: (BuildContext context, int index) => ClickableCard(
                         mainProducts: state.listProducts[index],
                       ),
                       staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
