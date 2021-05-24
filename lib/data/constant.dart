@@ -5,7 +5,9 @@ import 'package:pricer_project/view/HomeView/widget/category_layout/laptop_layou
 import 'package:pricer_project/view/HomeView/widget/category_layout/phone_layout.dart';
 
 // API
-final baseAPI = "http://10.0.2.2:3000/";
+final baseAPI = "http://192.168.18.46:3000/";
+
+final kConstantLimit = '20';
 
 class CategoryItem {
   String title;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:pricer_project/data/constant.dart';
 import 'package:pricer_project/logic/auth/auth_bloc.dart';
 import 'package:pricer_project/view/HomeView/grid_dashboard.dart';
 import 'package:pricer_project/view/HomeView/widget/search_bar/bloc/search_bloc.dart';
@@ -55,7 +56,8 @@ class _MyHomeState extends State<MyHome> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
+                child: BlocBuilder<SearchBloc, SearchState>(
+                    builder: (context, state) {
                   if (state is SearchListDone) {
                     return DropdownButton(
                       value: _selectedFilter,
@@ -64,10 +66,12 @@ class _MyHomeState extends State<MyHome> {
                           _selectedFilter = newValue;
                           _selectedQuery = state.query;
                         });
-                        BlocProvider.of<SearchBloc>(context).add(GetTokpedProduct(
+                        BlocProvider.of<SearchBloc>(context)
+                            .add(GetTokpedProduct(
                           query: _selectedQuery,
-                          limit: "10",
-                          fromLow: _selectedFilter == 'Lowest Price' ? true : false,
+                          limit: kConstantLimit,
+                          fromLow:
+                              _selectedFilter == 'Lowest Price' ? true : false,
                         ));
                       },
                       items: [
@@ -107,7 +111,8 @@ class _MyHomeState extends State<MyHome> {
                     child: StaggeredGridView.countBuilder(
                       crossAxisCount: 2,
                       itemCount: state.listProducts.length,
-                      itemBuilder: (BuildContext context, int index) => ClickableCard(
+                      itemBuilder: (BuildContext context, int index) =>
+                          ClickableCard(
                         mainProducts: state.listProducts[index],
                       ),
                       staggeredTileBuilder: (int index) => StaggeredTile.fit(1),

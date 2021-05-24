@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pricer_project/data/constant.dart';
 
 import 'category_layout/bloc/category_bloc.dart';
 
@@ -77,7 +78,7 @@ class _LayoutState extends State<Layout> {
       onSubmitted: (query) {
         BlocProvider.of<CategoryBloc>(context).add(
           GetListCategoryProducts(
-            limit: '10',
+            limit: kConstantLimit,
             query: query,
             parentCategory: widget.parentCategory,
             fromLow: true,

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:pricer_project/data/constant.dart';
 import 'package:pricer_project/view/HomeView/widget/category_layout/bloc/category_bloc.dart';
 import 'package:pricer_project/view/Widget/clickable_card.dart';
 
@@ -26,7 +27,7 @@ class _HobbyPageState extends State<HobbyPage> {
     super.initState();
     BlocProvider.of<CategoryBloc>(context).add(
       GetListCategoryProducts(
-        limit: '10',
+        limit: kConstantLimit,
         query: _parentCategory,
         parentCategory: _parentCategory,
         fromLow: _selectedFilter == 'Lowest Price' ? true : false,
@@ -114,7 +115,7 @@ class _HobbyPageState extends State<HobbyPage> {
                           onTap: () {
                             BlocProvider.of<CategoryBloc>(context).add(
                               GetListCategoryProducts(
-                                  limit: '10',
+                                  limit: kConstantLimit,
                                   query: 'gaming',
                                   parentCategory: _parentCategory),
                             );
@@ -144,7 +145,7 @@ class _HobbyPageState extends State<HobbyPage> {
                           onTap: () {
                             BlocProvider.of<CategoryBloc>(context).add(
                               GetListCategoryProducts(
-                                  limit: '10',
+                                  limit: kConstantLimit,
                                   query: 'photography',
                                   parentCategory: _parentCategory),
                             );
@@ -174,7 +175,7 @@ class _HobbyPageState extends State<HobbyPage> {
                           onTap: () {
                             BlocProvider.of<CategoryBloc>(context).add(
                               GetListCategoryProducts(
-                                  limit: '10',
+                                  limit: kConstantLimit,
                                   query: 'sport',
                                   parentCategory: _parentCategory),
                             );
@@ -210,7 +211,7 @@ class _HobbyPageState extends State<HobbyPage> {
                         });
                         BlocProvider.of<CategoryBloc>(context).add(
                           GetListCategoryProducts(
-                            limit: '10',
+                            limit: kConstantLimit,
                             query: _selectedQuery,
                             parentCategory: _parentCategory,
                             fromLow: _selectedFilter == 'Lowest Price'
@@ -284,7 +285,7 @@ class _HobbyPageState extends State<HobbyPage> {
         });
         BlocProvider.of<CategoryBloc>(context).add(
           GetListCategoryProducts(
-            limit: '10',
+            limit: kConstantLimit,
             query: _selectedQuery,
             parentCategory: _parentCategory,
             fromLow: true,

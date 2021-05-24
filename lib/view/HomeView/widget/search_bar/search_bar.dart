@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:pricer_project/data/constant.dart';
 import 'package:pricer_project/models/main_response/keyword.dart';
 import 'package:pricer_project/view/HomeView/widget/search_bar/bloc/search_bloc.dart';
 
@@ -24,7 +25,8 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
 
     return BlocListener<SearchBloc, SearchState>(
       listener: (_, state) {
@@ -49,9 +51,11 @@ class _SearchBarState extends State<SearchBar> {
           setState(() {
             _query = query;
           });
-          BlocProvider.of<SearchBloc>(context).add(GetTokpedSuggestion(query: _query, limit: "10"));
+          BlocProvider.of<SearchBloc>(context)
+              .add(GetTokpedSuggestion(query: _query, limit: kConstantLimit));
 
-          BlocProvider.of<SearchBloc>(context).add(GetTokpedProduct(query: _query, limit: "10"));
+          BlocProvider.of<SearchBloc>(context)
+              .add(GetTokpedProduct(query: _query, limit: kConstantLimit));
         },
         transition: SlideFadeFloatingSearchBarTransition(),
         actions: [
@@ -107,7 +111,8 @@ class _SearchBarState extends State<SearchBar> {
                       setState(() {
                         _query = e.keyword;
                       });
-                      BlocProvider.of<SearchBloc>(context).add(GetTokpedProduct(query: _query, limit: "10"));
+                      BlocProvider.of<SearchBloc>(context).add(GetTokpedProduct(
+                          query: _query, limit: kConstantLimit));
                     },
                   );
                 }).toList(),
