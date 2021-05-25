@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 class DetailView extends StatelessWidget {
   final MainProducts mainProducts;
 
-  DetailView({this.mainProducts});
+  DetailView({required this.mainProducts});
 
   void _launchUrl() async {
     if (mainProducts.originOlShop == 'tokopedia') {

@@ -5,7 +5,7 @@ class MainData {
   final Related related;
   final List<MainProducts> products;
 
-  MainData({this.related, this.products});
+  MainData({required this.related, required this.products});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
@@ -17,8 +17,8 @@ class MainData {
   factory MainData.fromJson(Map<String, dynamic> json) {
     if (json['products'] != null) {
       var tagObjsJson = json['products'] as List;
-      List<MainProducts> _product = tagObjsJson.map((e) => MainProducts.fromJson(e)).toList();
-
+      List<MainProducts> _product =
+          tagObjsJson.map((e) => MainProducts.fromJson(e)).toList();
       return MainData(
         related: Related.fromJson(json['related']),
         products: _product,

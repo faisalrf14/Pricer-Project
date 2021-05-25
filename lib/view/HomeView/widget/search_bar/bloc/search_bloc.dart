@@ -13,12 +13,14 @@ part 'search_state.dart';
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final SearchRepositories searchRepositories;
 
-  SearchBloc({this.searchRepositories}) : super(SearchInitial());
+  SearchBloc({required this.searchRepositories}) : super(SearchInitial());
 
-  Future<List<Keyword>> getSuggestion({String query, String limit}) async {
+  Future<List<Keyword>> getSuggestion(
+      {required String query, required String limit}) async {
     List<Keyword> _suggestions;
     try {
-      MainResponse mainResponse = await searchRepositories.getMainProducts(query: query, limit: limit);
+      MainResponse mainResponse = await searchRepositories.getMainProducts(
+          query: query, limit: limit, fromLow: true);
       _suggestions = mainResponse.data.related.otherRelated;
     } catch (e) {
       print(e);
@@ -27,10 +29,14 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     return _suggestions;
   }
 
-  Future<List<MainProducts>> getProductList({String query, String limit, bool fromLow}) async {
+  Future<List<MainProducts>> getProductList(
+      {required String query,
+      required String limit,
+      required bool fromLow}) async {
     List<MainProducts> _listProduct;
     try {
-      MainResponse mainResponse = await searchRepositories.getMainProducts(query: query, limit: limit, fromLow: fromLow);
+      MainResponse mainResponse = await searchRepositories.getMainProducts(
+          query: query, limit: limit, fromLow: fromLow);
       _listProduct = mainResponse.data.products;
     } catch (e) {
       print(e);
@@ -51,17 +57,21 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     }
   }
 
-  Stream<SearchState> _mapGetTokpedSuggestionToState(GetTokpedSuggestion event) async* {
+  Stream<SearchState> _mapGetTokpedSuggestionToState(
+      GetTokpedSuggestion event) async* {
     yield SearchListLoading();
 
-    List<Keyword> _suggestions = await getSuggestion(query: event.query, limit: event.limit);
+    List<Keyword> _suggestions =
+        await getSuggestion(query: event.query, limit: event.limit);
     yield SearchListSuggestionDone(suggestion: _suggestions);
   }
 
-  Stream<SearchState> _mapGetTokpedProductToState(GetTokpedProduct event) async* {
+  Stream<SearchState> _mapGetTokpedProductToState(
+      GetTokpedProduct event) async* {
     yield SearchListLoading();
 
-    List<MainProducts> _searchResult = await getProductList(query: event.query, limit: event.limit, fromLow: event.fromLow);
+    List<MainProducts> _searchResult = await getProductList(
+        query: event.query, limit: event.limit, fromLow: event.fromLow);
     if (_searchResult.length == 0) {
       yield SearchInitial();
     } else {

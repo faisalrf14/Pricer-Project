@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:pricer_project/data/repositories/user_repositories.dart';
 import 'package:pricer_project/services/service_session_manager.dart';
 
@@ -11,7 +10,7 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserRepository userRepository;
-  AuthBloc({this.userRepository}) : super(AuthInitial());
+  AuthBloc({required this.userRepository}) : super(AuthInitial());
 
   @override
   Stream<AuthState> mapEventToState(
@@ -35,6 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       final String currentUserEmail = await SessionManagerService().getUser();
+      // ignore: unnecessary_null_comparison
       if (currentUserEmail != null) {
         yield AuthAuthenticated(userEmail: currentUserEmail);
       } else {

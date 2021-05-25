@@ -10,7 +10,7 @@ abstract class PageEvent extends Equatable {
 class SelectedPage extends PageEvent {
   final String pageState;
 
-  SelectedPage({this.pageState});
+  SelectedPage({required this.pageState});
 
   @override
   List<Object> get props => [pageState];

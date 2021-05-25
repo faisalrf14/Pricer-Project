@@ -41,7 +41,7 @@ class _PhonePageState extends State<PhonePage> {
   }
 
   void _startSearch() {
-    ModalRoute.of(context)
+    ModalRoute.of(context)!
         .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
 
     setState(() {
@@ -116,9 +116,11 @@ class _PhonePageState extends State<PhonePage> {
                           onTap: () {
                             BlocProvider.of<CategoryBloc>(context).add(
                               GetListCategoryProducts(
-                                  limit: kConstantLimit,
-                                  query: 'iphone',
-                                  parentCategory: 'mobilePhone'),
+                                limit: kConstantLimit,
+                                query: 'iphone',
+                                parentCategory: 'mobilePhone',
+                                fromLow: true,
+                              ),
                             );
                             setState(() {
                               _selectedCategory = 'iOS';
@@ -144,11 +146,13 @@ class _PhonePageState extends State<PhonePage> {
                             ),
                           ),
                           onTap: () {
-                            BlocProvider.of<CategoryBloc>(context).add(
-                                GetListCategoryProducts(
-                                    limit: kConstantLimit,
-                                    query: 'android',
-                                    parentCategory: 'mobilePhone'));
+                            BlocProvider.of<CategoryBloc>(context)
+                                .add(GetListCategoryProducts(
+                              limit: kConstantLimit,
+                              query: 'android',
+                              parentCategory: 'mobilePhone',
+                              fromLow: true,
+                            ));
                             setState(() {
                               _selectedCategory = 'Android';
                               _selectedQuery = 'android';
@@ -177,7 +181,7 @@ class _PhonePageState extends State<PhonePage> {
                       value: _selectedFilter,
                       onChanged: (newValue) {
                         setState(() {
-                          _selectedFilter = newValue;
+                          _selectedFilter = newValue.toString();
                         });
                         BlocProvider.of<CategoryBloc>(context).add(
                           GetListCategoryProducts(
@@ -269,6 +273,7 @@ class _PhonePageState extends State<PhonePage> {
         IconButton(
           icon: const Icon(Icons.clear),
           onPressed: () {
+            // ignore: unnecessary_null_comparison
             if (_searchQueryController == null ||
                 _searchQueryController.text.isEmpty) {
               Navigator.pop(context);

@@ -4,7 +4,12 @@ class ShopeeProduct {
   final int shopId;
   final int price;
 
-  ShopeeProduct({this.name, this.itemId, this.shopId, this.price});
+  ShopeeProduct({
+    required this.name,
+    required this.itemId,
+    required this.shopId,
+    required this.price,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();

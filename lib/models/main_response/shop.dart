@@ -1,7 +1,7 @@
 class Shop {
   final String city;
 
-  Shop({this.city});
+  Shop({required this.city});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();

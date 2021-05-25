@@ -10,7 +10,10 @@ class Layout extends StatefulWidget {
   final String appbar;
   final String parentCategory;
   final Widget content;
-  Layout({this.appbar, this.parentCategory, this.content});
+  Layout(
+      {required this.appbar,
+      required this.parentCategory,
+      required this.content});
 }
 
 class _LayoutState extends State<Layout> {
@@ -20,7 +23,7 @@ class _LayoutState extends State<Layout> {
   var idSelected = 0;
 
   void _startSearch() {
-    ModalRoute.of(context)
+    ModalRoute.of(context)!
         .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
 
     setState(() {
@@ -94,6 +97,7 @@ class _LayoutState extends State<Layout> {
         IconButton(
           icon: const Icon(Icons.clear),
           onPressed: () {
+            // ignore: unnecessary_null_comparison
             if (_searchQueryController == null ||
                 _searchQueryController.text.isEmpty) {
               Navigator.pop(context);

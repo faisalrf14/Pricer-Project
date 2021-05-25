@@ -12,12 +12,12 @@ part 'category_state.dart';
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final SearchRepositories searchRepositories;
 
-  CategoryBloc({this.searchRepositories}) : super(CategoryInitial());
+  CategoryBloc({required this.searchRepositories}) : super(CategoryInitial());
 
   Future<List<MainProducts>> getProductList({
-    String query,
-    String limit,
-    bool fromLow,
+    required String query,
+    required String limit,
+    required bool fromLow,
   }) async {
     List<MainProducts> _listProduct;
     try {

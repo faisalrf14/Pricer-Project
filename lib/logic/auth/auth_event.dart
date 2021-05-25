@@ -12,7 +12,7 @@ class AppLoaded extends AuthEvent {}
 class UserLoggedIn extends AuthEvent {
   final String userEmail;
 
-  UserLoggedIn({@required this.userEmail});
+  UserLoggedIn({required this.userEmail});
 
   @override
   List<Object> get props => [userEmail];

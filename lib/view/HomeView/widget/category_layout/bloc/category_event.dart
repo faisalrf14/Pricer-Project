@@ -14,10 +14,10 @@ class GetListCategoryProducts extends CategoryEvent {
   final bool fromLow;
 
   GetListCategoryProducts({
-    this.parentCategory,
-    this.query,
-    this.limit,
-    this.fromLow,
+    required this.parentCategory,
+    required this.query,
+    required this.limit,
+    required this.fromLow,
   });
 
   @override
