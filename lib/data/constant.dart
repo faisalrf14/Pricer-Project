@@ -5,7 +5,7 @@ import 'package:pricer_project/view/HomeView/widget/category_layout/laptop_layou
 import 'package:pricer_project/view/HomeView/widget/category_layout/phone_layout.dart';
 
 // API
-final baseAPI = "http://192.168.18.46:3000/";
+final baseAPI = "http://192.168.1.19:3000/";
 
 final kConstantLimit = '20';
 
@@ -18,12 +18,12 @@ class CategoryItem {
   Widget content;
 
   CategoryItem({
-    this.title,
-    this.parentCategory,
-    this.appBarTitle,
-    this.name,
-    this.image,
-    this.content,
+    required this.title,
+    required this.parentCategory,
+    required this.appBarTitle,
+    required this.name,
+    required this.image,
+    required this.content,
   });
 }
 
@@ -34,6 +34,7 @@ List<CategoryItem> categoryList = [
     appBarTitle: 'Hobby Category',
     image: "assets/images/hobby.png",
     content: HobbyPage(),
+    name: '',
   ),
   new CategoryItem(
     title: "Mobile Phone",
@@ -41,6 +42,7 @@ List<CategoryItem> categoryList = [
     appBarTitle: 'Mobile Phone Category',
     image: "assets/images/mobile.png",
     content: PhonePage(),
+    name: '',
   ),
   new CategoryItem(
     title: "Furniture",
@@ -48,6 +50,7 @@ List<CategoryItem> categoryList = [
     appBarTitle: 'Furniture Category',
     image: "assets/images/furniture.png",
     content: FurniturePage(),
+    name: '',
   ),
   new CategoryItem(
     title: "Laptop",
@@ -55,6 +58,7 @@ List<CategoryItem> categoryList = [
     appBarTitle: 'Laptop Category',
     image: "assets/images/laptop.png",
     content: LaptopPage(),
+    name: '',
   ),
 ];
 

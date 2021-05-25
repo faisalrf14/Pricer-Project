@@ -4,7 +4,7 @@ class Related {
   final String relatedKeyword;
   final List<Keyword> otherRelated;
 
-  Related({this.relatedKeyword, this.otherRelated});
+  Related({required this.relatedKeyword, required this.otherRelated});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
@@ -16,7 +16,8 @@ class Related {
   factory Related.fromJson(Map<String, dynamic> json) {
     if (json['otherRelated'] != null) {
       var tagObjsJson = json['otherRelated'] as List;
-      List<Keyword> _otherRelated = tagObjsJson.map((e) => Keyword.fromJson(e)).toList();
+      List<Keyword> _otherRelated =
+          tagObjsJson.map((e) => Keyword.fromJson(e)).toList();
 
       return Related(
         relatedKeyword: json['relatedKeyword'],

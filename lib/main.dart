@@ -24,17 +24,34 @@ Future<void> main() async {
   runApp(
     MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<SearchRepositories>(create: (context) => SearchRepositories(pricerApi: PricerApi())),
-        RepositoryProvider<UserRepository>(create: (context) => UserRepository(pricerApi: PricerApi())),
-        RepositoryProvider<TokpedRepositories>(create: (context) => TokpedRepositories(pricerApi: PricerApi())),
+        RepositoryProvider<SearchRepositories>(
+            create: (context) => SearchRepositories(pricerApi: PricerApi())),
+        RepositoryProvider<UserRepository>(
+            create: (context) => UserRepository(pricerApi: PricerApi())),
+        RepositoryProvider<TokpedRepositories>(
+            create: (context) => TokpedRepositories(pricerApi: PricerApi())),
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<SearchBloc>(create: (context) => SearchBloc(searchRepositories: SearchRepositories(pricerApi: PricerApi()))),
-          BlocProvider<AuthBloc>(create: (context) => AuthBloc(userRepository: UserRepository(pricerApi: PricerApi()))..add(AppLoaded())),
-          BlocProvider<LoginBloc>(create: (context) => LoginBloc(userRepository: UserRepository(pricerApi: PricerApi()), authBloc: BlocProvider.of<AuthBloc>(context))),
-          BlocProvider<PageBloc>(create: (context) => PageBloc()..add(SelectedPage(pageState: 'Login'))),
-          BlocProvider<CategoryBloc>(create: (context) => CategoryBloc(searchRepositories: SearchRepositories(pricerApi: PricerApi()))),
+          BlocProvider<SearchBloc>(
+              create: (context) => SearchBloc(
+                  searchRepositories:
+                      SearchRepositories(pricerApi: PricerApi()))),
+          BlocProvider<AuthBloc>(
+              create: (context) => AuthBloc(
+                  userRepository: UserRepository(pricerApi: PricerApi()))
+                ..add(AppLoaded())),
+          BlocProvider<LoginBloc>(
+              create: (context) => LoginBloc(
+                  userRepository: UserRepository(pricerApi: PricerApi()),
+                  authBloc: BlocProvider.of<AuthBloc>(context))),
+          BlocProvider<PageBloc>(
+              create: (context) =>
+                  PageBloc()..add(SelectedPage(pageState: 'Login'))),
+          BlocProvider<CategoryBloc>(
+              create: (context) => CategoryBloc(
+                  searchRepositories:
+                      SearchRepositories(pricerApi: PricerApi()))),
         ],
         child: MyApp(),
       ),

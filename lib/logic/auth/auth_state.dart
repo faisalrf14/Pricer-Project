@@ -16,7 +16,7 @@ class AuthNotAuthenticated extends AuthState {}
 class AuthAuthenticated extends AuthState {
   final String userEmail;
 
-  AuthAuthenticated({@required this.userEmail});
+  AuthAuthenticated({required this.userEmail});
 
   @override
   List<Object> get props => [userEmail];
@@ -25,7 +25,7 @@ class AuthAuthenticated extends AuthState {
 class AuthFailure extends AuthState {
   final String message;
 
-  AuthFailure({@required this.message});
+  AuthFailure({required this.message});
 
   @override
   List<Object> get props => [message];

@@ -11,22 +11,32 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String _email;
-  String _password;
+  late String _email;
+  late String _password;
 
   _handleLogin() {
+    // ignore: unnecessary_null_comparison
     if (_email == null || _password == null) {
-      WidgetNotificationSnackbar().render(context: context, color: Colors.red, message: 'Please Input Username or Password');
+      WidgetNotificationSnackbar().render(
+          context: context,
+          color: Colors.red,
+          message: 'Please Input Username or Password');
     } else {
-      BlocProvider.of<LoginBloc>(context).add(LoginAccount(email: _email, password: _password));
+      BlocProvider.of<LoginBloc>(context)
+          .add(LoginAccount(email: _email, password: _password));
     }
   }
 
   _handleRegister() {
+    // ignore: unnecessary_null_comparison
     if (_email == null || _password == null) {
-      WidgetNotificationSnackbar().render(context: context, color: Colors.red, message: 'Please Input Username or Password');
+      WidgetNotificationSnackbar().render(
+          context: context,
+          color: Colors.red,
+          message: 'Please Input Username or Password');
     } else {
-      BlocProvider.of<LoginBloc>(context).add(RegisterAccount(email: _email, password: _password));
+      BlocProvider.of<LoginBloc>(context)
+          .add(RegisterAccount(email: _email, password: _password));
     }
   }
 
@@ -35,10 +45,12 @@ class _LoginPageState extends State<LoginPage> {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is LoginFailure) {
-          WidgetNotificationSnackbar().render(context: context, color: Colors.red, message: state.message);
+          WidgetNotificationSnackbar().render(
+              context: context, color: Colors.red, message: state.message);
         }
         if (state is RegisterSuccess) {
-          WidgetNotificationSnackbar().render(context: context, color: Colors.green, message: state.message);
+          WidgetNotificationSnackbar().render(
+              context: context, color: Colors.green, message: state.message);
         }
       },
       child: Container(
@@ -105,7 +117,8 @@ class _LoginPageState extends State<LoginPage> {
               },
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10.0, left: 40.0, right: 40.0),
+              padding:
+                  const EdgeInsets.only(top: 10.0, left: 40.0, right: 40.0),
               child: TextFormField(
                 onTap: () {
                   FocusScopeNode currentFocus = FocusScope.of(context);
@@ -123,12 +136,14 @@ class _LoginPageState extends State<LoginPage> {
                   filled: true,
                   isDense: true,
                   contentPadding: EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 10.0),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0)),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 12.0, right: 40.0, left: 40.0),
+              padding:
+                  const EdgeInsets.only(top: 12.0, right: 40.0, left: 40.0),
               child: TextFormField(
                 obscureText: true,
                 onTap: () {
@@ -147,7 +162,8 @@ class _LoginPageState extends State<LoginPage> {
                   filled: true,
                   isDense: true,
                   contentPadding: EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 10.0),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0)),
                 ),
               ),
             ),
@@ -172,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _loginRegisButton({bool isLogin}) {
+  Widget _loginRegisButton({required bool isLogin}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -187,7 +203,8 @@ class _LoginPageState extends State<LoginPage> {
               );
             }
             if (state is RegisterSuccess) {
-              BlocProvider.of<PageBloc>(context).add(SelectedPage(pageState: 'Login'));
+              BlocProvider.of<PageBloc>(context)
+                  .add(SelectedPage(pageState: 'Login'));
             }
             return ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -243,7 +260,11 @@ class _LoginPageState extends State<LoginPage> {
               isLogin ? 'REGISTER NOW' : 'LOG IN NOW',
               style: TextStyle(color: Colors.white),
             ),
-            onPressed: () => isLogin ? BlocProvider.of<PageBloc>(context).add(SelectedPage(pageState: 'Register')) : BlocProvider.of<PageBloc>(context).add(SelectedPage(pageState: 'Login')),
+            onPressed: () => isLogin
+                ? BlocProvider.of<PageBloc>(context)
+                    .add(SelectedPage(pageState: 'Register'))
+                : BlocProvider.of<PageBloc>(context)
+                    .add(SelectedPage(pageState: 'Login')),
           ),
         ),
       ],

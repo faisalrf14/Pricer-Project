@@ -5,7 +5,6 @@ class MainProducts {
   final String name;
   final String imageUrl;
   final String price;
-  final String priceStr;
   final String url;
   final int itemId;
   final int shopId;
@@ -13,7 +12,18 @@ class MainProducts {
   final String shopLocation;
   final Shop shop;
 
-  MainProducts({this.id, this.name, this.imageUrl, this.price, this.priceStr, this.url, this.itemId, this.shopId, this.originOlShop, this.shopLocation, this.shop});
+  MainProducts({
+    required this.id,
+    required this.name,
+    required this.imageUrl,
+    required this.price,
+    required this.url,
+    required this.itemId,
+    required this.shopId,
+    required this.originOlShop,
+    required this.shopLocation,
+    required this.shop,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
@@ -37,12 +47,12 @@ class MainProducts {
         name: json['name'],
         imageUrl: json['imageUrl'],
         price: json['price'].toString(),
-        priceStr: json['priceStr'],
         url: json['url'],
         itemId: json['itemid'],
         shopId: json['shopid'],
         originOlShop: json['originOlShop'],
         shopLocation: json['shop_location'],
+        shop: new Shop(city: ''),
       );
     } else {
       return MainProducts(
@@ -50,7 +60,6 @@ class MainProducts {
         name: json['name'],
         imageUrl: json['imageUrl'],
         price: json['price'].toString(),
-        priceStr: json['priceStr'],
         url: json['url'],
         itemId: json['itemid'],
         shopId: json['shopid'],

@@ -14,7 +14,7 @@ class CategoryLoading extends CategoryState {}
 class CategoryParentSearchDone extends CategoryState {
   final List<MainProducts> listProducts;
 
-  CategoryParentSearchDone({this.listProducts});
+  CategoryParentSearchDone({required this.listProducts});
 
   @override
   List<Object> get props => [listProducts];
@@ -23,7 +23,7 @@ class CategoryParentSearchDone extends CategoryState {
 class CategoryHobbySearchDone extends CategoryState {
   final List<MainProducts> listProducts;
 
-  CategoryHobbySearchDone({this.listProducts});
+  CategoryHobbySearchDone({required this.listProducts});
 
   @override
   List<Object> get props => [listProducts];
@@ -32,7 +32,7 @@ class CategoryHobbySearchDone extends CategoryState {
 class CategoryMobilePhoneSearchDone extends CategoryState {
   final List<MainProducts> listProducts;
 
-  CategoryMobilePhoneSearchDone({this.listProducts});
+  CategoryMobilePhoneSearchDone({required this.listProducts});
 
   @override
   List<Object> get props => [listProducts];
@@ -41,7 +41,7 @@ class CategoryMobilePhoneSearchDone extends CategoryState {
 class CategoryFurnitureSearchDone extends CategoryState {
   final List<MainProducts> listProducts;
 
-  CategoryFurnitureSearchDone({this.listProducts});
+  CategoryFurnitureSearchDone({required this.listProducts});
 
   @override
   List<Object> get props => [listProducts];
@@ -50,7 +50,7 @@ class CategoryFurnitureSearchDone extends CategoryState {
 class CategoryLaptopSearchDone extends CategoryState {
   final List<MainProducts> listProducts;
 
-  CategoryLaptopSearchDone({this.listProducts});
+  CategoryLaptopSearchDone({required this.listProducts});
 
   @override
   List<Object> get props => [listProducts];

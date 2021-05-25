@@ -41,7 +41,7 @@ class _LaptopPageState extends State<LaptopPage> {
   }
 
   void _startSearch() {
-    ModalRoute.of(context)
+    ModalRoute.of(context)!
         .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
 
     setState(() {
@@ -116,9 +116,11 @@ class _LaptopPageState extends State<LaptopPage> {
                             onTap: () {
                               BlocProvider.of<CategoryBloc>(context).add(
                                 GetListCategoryProducts(
-                                    limit: kConstantLimit,
-                                    query: 'laptop gaming',
-                                    parentCategory: _parentCategory),
+                                  limit: kConstantLimit,
+                                  query: 'laptop gaming',
+                                  parentCategory: _parentCategory,
+                                  fromLow: true,
+                                ),
                               );
                               setState(() {
                                 _selectedCategory = 'Laptop Gaming';
@@ -147,9 +149,11 @@ class _LaptopPageState extends State<LaptopPage> {
                             onTap: () {
                               BlocProvider.of<CategoryBloc>(context).add(
                                 GetListCategoryProducts(
-                                    limit: kConstantLimit,
-                                    query: 'office laptop',
-                                    parentCategory: _parentCategory),
+                                  limit: kConstantLimit,
+                                  query: 'office laptop',
+                                  parentCategory: _parentCategory,
+                                  fromLow: true,
+                                ),
                               );
                               setState(() {
                                 _selectedCategory = 'Office Laptop';
@@ -179,9 +183,11 @@ class _LaptopPageState extends State<LaptopPage> {
                             onTap: () {
                               BlocProvider.of<CategoryBloc>(context).add(
                                 GetListCategoryProducts(
-                                    limit: kConstantLimit,
-                                    query: 'laptop content creator',
-                                    parentCategory: _parentCategory),
+                                  limit: kConstantLimit,
+                                  query: 'laptop content creator',
+                                  parentCategory: _parentCategory,
+                                  fromLow: true,
+                                ),
                               );
                               setState(() {
                                 _selectedCategory = 'Content Creator Laptop';
@@ -211,7 +217,7 @@ class _LaptopPageState extends State<LaptopPage> {
                         value: _selectedFilter,
                         onChanged: (newValue) {
                           setState(() {
-                            _selectedFilter = newValue;
+                            _selectedFilter = newValue.toString();
                           });
                           BlocProvider.of<CategoryBloc>(context).add(
                             GetListCategoryProducts(
@@ -303,6 +309,7 @@ class _LaptopPageState extends State<LaptopPage> {
         IconButton(
           icon: const Icon(Icons.clear),
           onPressed: () {
+            // ignore: unnecessary_null_comparison
             if (_searchQueryController == null ||
                 _searchQueryController.text.isEmpty) {
               Navigator.pop(context);

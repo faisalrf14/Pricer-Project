@@ -6,8 +6,14 @@ class TokpedProduct {
   final String priceStr;
   final String url;
 
-  TokpedProduct(
-      {this.id, this.name, this.imageUrl, this.price, this.priceStr, this.url});
+  TokpedProduct({
+    required this.id,
+    required this.name,
+    required this.imageUrl,
+    required this.price,
+    required this.priceStr,
+    required this.url,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();

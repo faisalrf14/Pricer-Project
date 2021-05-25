@@ -5,7 +5,11 @@ class ShopeeResponse {
   final String responseMessage;
   List<ShopeeProduct> data;
 
-  ShopeeResponse({this.responseCode, this.responseMessage, this.data});
+  ShopeeResponse({
+    required this.responseCode,
+    required this.responseMessage,
+    required this.data,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
@@ -18,7 +22,8 @@ class ShopeeResponse {
   factory ShopeeResponse.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       var tagObjsJson = json['data'] as List;
-      List<ShopeeProduct> _data = tagObjsJson.map((e) => ShopeeProduct.fromJson(e)).toList();
+      List<ShopeeProduct> _data =
+          tagObjsJson.map((e) => ShopeeProduct.fromJson(e)).toList();
       return ShopeeResponse(
         responseCode: json['responseCode'],
         responseMessage: json['responseMessage'],

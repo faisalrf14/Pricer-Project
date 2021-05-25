@@ -5,7 +5,7 @@ class Keyword {
   final String url;
   final List<TokpedProduct> product;
 
-  Keyword({this.keyword, this.url, this.product});
+  Keyword({required this.keyword, required this.url, required this.product});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();

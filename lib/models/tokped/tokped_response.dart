@@ -5,7 +5,11 @@ class TokpedResponse {
   final String responseMessage;
   final SimpleData data;
 
-  TokpedResponse({this.responseCode, this.responseMessage, this.data});
+  TokpedResponse({
+    required this.responseCode,
+    required this.responseMessage,
+    required this.data,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();

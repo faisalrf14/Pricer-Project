@@ -5,7 +5,11 @@ class MainResponse {
   final String responseMessage;
   final MainData data;
 
-  MainResponse({this.responseCode, this.responseMessage, this.data});
+  MainResponse({
+    required this.responseCode,
+    required this.responseMessage,
+    required this.data,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();

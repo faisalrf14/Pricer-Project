@@ -39,7 +39,7 @@ class _FurniturePageState extends State<FurniturePage> {
   }
 
   void _startSearch() {
-    ModalRoute.of(context)
+    ModalRoute.of(context)!
         .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
 
     setState(() {
@@ -113,9 +113,11 @@ class _FurniturePageState extends State<FurniturePage> {
                           onTap: () {
                             BlocProvider.of<CategoryBloc>(context).add(
                               GetListCategoryProducts(
-                                  limit: kConstantLimit,
-                                  query: 'bedroom',
-                                  parentCategory: _parentCategory),
+                                limit: kConstantLimit,
+                                query: 'bedroom',
+                                parentCategory: _parentCategory,
+                                fromLow: true,
+                              ),
                             );
                             setState(() {
                               _selectedCategory = 'Bedroom';
@@ -143,9 +145,11 @@ class _FurniturePageState extends State<FurniturePage> {
                           onTap: () {
                             BlocProvider.of<CategoryBloc>(context).add(
                               GetListCategoryProducts(
-                                  limit: kConstantLimit,
-                                  query: 'living room',
-                                  parentCategory: _parentCategory),
+                                limit: kConstantLimit,
+                                query: 'living room',
+                                parentCategory: _parentCategory,
+                                fromLow: true,
+                              ),
                             );
                             setState(() {
                               _selectedCategory = 'Living Room';
@@ -173,9 +177,11 @@ class _FurniturePageState extends State<FurniturePage> {
                           onTap: () {
                             BlocProvider.of<CategoryBloc>(context).add(
                               GetListCategoryProducts(
-                                  limit: kConstantLimit,
-                                  query: 'kitchen',
-                                  parentCategory: _parentCategory),
+                                limit: kConstantLimit,
+                                query: 'kitchen',
+                                parentCategory: _parentCategory,
+                                fromLow: true,
+                              ),
                             );
                             setState(() {
                               _selectedCategory = 'Kitchen';
@@ -205,7 +211,7 @@ class _FurniturePageState extends State<FurniturePage> {
                       value: _selectedFilter,
                       onChanged: (newValue) {
                         setState(() {
-                          _selectedFilter = newValue;
+                          _selectedFilter = newValue.toString();
                         });
                         BlocProvider.of<CategoryBloc>(context).add(
                           GetListCategoryProducts(
@@ -297,6 +303,7 @@ class _FurniturePageState extends State<FurniturePage> {
         IconButton(
           icon: const Icon(Icons.clear),
           onPressed: () {
+            // ignore: unnecessary_null_comparison
             if (_searchQueryController == null ||
                 _searchQueryController.text.isEmpty) {
               Navigator.pop(context);

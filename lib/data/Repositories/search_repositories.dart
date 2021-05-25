@@ -3,13 +3,13 @@ import 'package:pricer_project/models/main_response/main_response.dart';
 
 class SearchRepositories {
   final PricerApi pricerApi;
-  SearchRepositories({this.pricerApi});
+  SearchRepositories({required this.pricerApi});
 
   // find product
   Future<MainResponse> getMainProducts({
-    String query,
-    String limit,
-    bool fromLow,
+    required String query,
+    required String limit,
+    required bool fromLow,
   }) async {
     MainResponse tokpedResponse = await pricerApi.getMainProducts(
       query: query,

@@ -2,10 +2,13 @@ import 'dart:convert';
 
 import 'package:pricer_project/data/constant.dart';
 import 'package:pricer_project/models/login_response.dart';
+import 'package:pricer_project/models/main_response/main_data.dart';
 import 'package:pricer_project/models/main_response/main_response.dart';
+import 'package:pricer_project/models/main_response/related.dart';
 import 'package:pricer_project/models/register_response.dart';
 import 'package:pricer_project/models/request_product.dart';
 import 'package:pricer_project/models/shopee/shopee_response.dart';
+import 'package:pricer_project/models/tokped/simple_data.dart';
 import 'package:pricer_project/models/tokped/tokped_response.dart';
 import 'package:pricer_project/services/firebase_auth.dart';
 import 'package:pricer_project/services/service_session_manager.dart';
@@ -14,14 +17,17 @@ import 'package:http/http.dart' as http;
 class PricerApi {
   PricerApi();
 
-  Future<LoginResponse> signInWithEmailAndPassword({String email, String password}) async {
+  Future<LoginResponse> signInWithEmailAndPassword(
+      {required String email, required String password}) async {
     try {
-      LoginResponse loginResponse = await FireBaseAuthService.signInWithEmailAndPassword(email: email, password: password);
+      LoginResponse loginResponse =
+          await FireBaseAuthService.signInWithEmailAndPassword(
+              email: email, password: password);
       if (loginResponse.user != null) {
         SessionManagerService().setUser(loginResponse.user);
-        return LoginResponse(message: "Login success");
+        return LoginResponse(message: "Login success", user: null);
       } else {
-        return LoginResponse(message: loginResponse.message);
+        return LoginResponse(message: loginResponse.message, user: null);
       }
     } catch (e) {
       print(e.toString());
@@ -29,14 +35,17 @@ class PricerApi {
     }
   }
 
-  Future<RegisterResponse> registerWithEmailAndPassword({String email, String password}) async {
+  Future<RegisterResponse> registerWithEmailAndPassword(
+      {required String email, required String password}) async {
     try {
-      RegisterResponse registerResponse = await FireBaseAuthService.registerWithEmailAndPassword(email: email, password: password);
+      RegisterResponse registerResponse =
+          await FireBaseAuthService.registerWithEmailAndPassword(
+              email: email, password: password);
       if (registerResponse.user != null) {
         SessionManagerService().setUser(registerResponse.user);
-        return RegisterResponse(message: "Register Success");
+        return RegisterResponse(message: "Register Success", user: null);
       } else {
-        return RegisterResponse(message: registerResponse.message);
+        return RegisterResponse(message: registerResponse.message, user: null);
       }
     } catch (e) {
       print(e.toString());
@@ -45,21 +54,20 @@ class PricerApi {
   }
 
   Future<MainResponse> getMainProducts({
-    String query,
-    String limit,
-    bool fromLow,
+    required String query,
+    required String limit,
+    required bool fromLow,
   }) async {
     try {
       RequestProduct request = new RequestProduct(
         query: query,
         limit: limit,
-        fromLow: fromLow ?? true,
+        fromLow: fromLow,
       );
 
       Map<String, String> headers = {'Content-type': 'application/json'};
-
       var response = await http.post(
-        baseAPI + "main/search",
+        Uri.parse(baseAPI + "main/search"),
         body: jsonEncode(request.toJson()),
         headers: headers,
       );
@@ -73,6 +81,10 @@ class PricerApi {
         MainResponse response = new MainResponse(
           responseCode: 400,
           responseMessage: responseBody['responseMessage'],
+          data: new MainData(
+            related: new Related(relatedKeyword: '', otherRelated: []),
+            products: [],
+          ),
         );
         return response;
       } else {
@@ -85,14 +97,18 @@ class PricerApi {
     }
   }
 
-  Future<TokpedResponse> getTokpedProduct({String query, String limit}) async {
+  Future<TokpedResponse> getTokpedProduct(
+      {required String query, required String limit}) async {
     try {
-      RequestProduct request = new RequestProduct(query: query, limit: limit);
+      RequestProduct request = new RequestProduct(
+        query: query,
+        limit: limit,
+        fromLow: true,
+      );
 
       Map<String, String> headers = {'Content-type': 'application/json'};
-
       var response = await http.post(
-        baseAPI + "tokopedia/search",
+        new Uri.dataFromString(baseAPI + "tokopedia/search"),
         body: jsonEncode(request.toJson()),
         headers: headers,
       );
@@ -106,6 +122,9 @@ class PricerApi {
         TokpedResponse response = new TokpedResponse(
           responseCode: 400,
           responseMessage: responseBody['responseMessage'],
+          data: new SimpleData(
+              related: new Related(relatedKeyword: '', otherRelated: []),
+              products: []),
         );
         return response;
       } else {
@@ -118,14 +137,19 @@ class PricerApi {
     }
   }
 
-  Future<ShopeeResponse> getShopeeProduct({String query, String limit}) async {
+  Future<ShopeeResponse> getShopeeProduct(
+      {required String query, required String limit}) async {
     try {
-      RequestProduct request = new RequestProduct(query: query, limit: limit);
+      RequestProduct request = new RequestProduct(
+        query: query,
+        limit: limit,
+        fromLow: true,
+      );
 
       Map<String, String> headers = {'Content-type': 'application/json'};
 
       var response = await http.post(
-        baseAPI + "shopee/search",
+        new Uri.dataFromString(baseAPI + "shopee/search"),
         body: jsonEncode(request.toJson()),
         headers: headers,
       );
@@ -139,6 +163,7 @@ class PricerApi {
         ShopeeResponse response = new ShopeeResponse(
           responseCode: 400,
           responseMessage: responseBody['responseMessage'],
+          data: [],
         );
         return response;
       } else {

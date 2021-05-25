@@ -3,7 +3,11 @@ class RequestProduct {
   final String limit;
   final bool fromLow;
 
-  RequestProduct({this.query, this.limit, this.fromLow});
+  RequestProduct({
+    required this.query,
+    required this.limit,
+    required this.fromLow,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();

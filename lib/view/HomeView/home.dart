@@ -12,14 +12,14 @@ import 'widget/search_bar/search_bar.dart';
 class MyHome extends StatefulWidget {
   final String email;
 
-  MyHome({this.email});
+  MyHome({required this.email});
 
   @override
   _MyHomeState createState() => _MyHomeState();
 }
 
 class _MyHomeState extends State<MyHome> {
-  String email;
+  late String email;
 
   String _selectedFilter = 'Lowest Price';
   String _selectedQuery = '';
@@ -63,7 +63,7 @@ class _MyHomeState extends State<MyHome> {
                       value: _selectedFilter,
                       onChanged: (newValue) {
                         setState(() {
-                          _selectedFilter = newValue;
+                          _selectedFilter = newValue.toString();
                           _selectedQuery = state.query;
                         });
                         BlocProvider.of<SearchBloc>(context)
@@ -72,6 +72,7 @@ class _MyHomeState extends State<MyHome> {
                           limit: kConstantLimit,
                           fromLow:
                               _selectedFilter == 'Lowest Price' ? true : false,
+                          parentCategory: '',
                         ));
                       },
                       items: [
@@ -91,7 +92,7 @@ class _MyHomeState extends State<MyHome> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Welcome! " + this.email ?? "",
+                          "Welcome! " + this.email,
                           style: TextStyle(
                             fontSize: 20,
                           ),
@@ -132,7 +133,7 @@ class _MyHomeState extends State<MyHome> {
     );
   }
 
-  Widget olShopCompare({String imageSrc, String title}) {
+  Widget olShopCompare({required String imageSrc, required String title}) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.5,
       child: Center(

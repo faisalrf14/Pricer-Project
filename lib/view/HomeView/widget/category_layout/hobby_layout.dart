@@ -41,7 +41,7 @@ class _HobbyPageState extends State<HobbyPage> {
   }
 
   void _startSearch() {
-    ModalRoute.of(context)
+    ModalRoute.of(context)!
         .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
 
     setState(() {
@@ -115,9 +115,11 @@ class _HobbyPageState extends State<HobbyPage> {
                           onTap: () {
                             BlocProvider.of<CategoryBloc>(context).add(
                               GetListCategoryProducts(
-                                  limit: kConstantLimit,
-                                  query: 'gaming',
-                                  parentCategory: _parentCategory),
+                                limit: kConstantLimit,
+                                query: 'gaming',
+                                parentCategory: _parentCategory,
+                                fromLow: true,
+                              ),
                             );
                             setState(() {
                               _selectedCategory = 'Gaming';
@@ -145,9 +147,11 @@ class _HobbyPageState extends State<HobbyPage> {
                           onTap: () {
                             BlocProvider.of<CategoryBloc>(context).add(
                               GetListCategoryProducts(
-                                  limit: kConstantLimit,
-                                  query: 'photography',
-                                  parentCategory: _parentCategory),
+                                limit: kConstantLimit,
+                                query: 'photography',
+                                parentCategory: _parentCategory,
+                                fromLow: true,
+                              ),
                             );
                             setState(() {
                               _selectedCategory = 'Photography';
@@ -175,9 +179,11 @@ class _HobbyPageState extends State<HobbyPage> {
                           onTap: () {
                             BlocProvider.of<CategoryBloc>(context).add(
                               GetListCategoryProducts(
-                                  limit: kConstantLimit,
-                                  query: 'sport',
-                                  parentCategory: _parentCategory),
+                                limit: kConstantLimit,
+                                query: 'sport',
+                                parentCategory: _parentCategory,
+                                fromLow: true,
+                              ),
                             );
                             setState(() {
                               _selectedCategory = 'Sport';
@@ -207,7 +213,7 @@ class _HobbyPageState extends State<HobbyPage> {
                       value: _selectedFilter,
                       onChanged: (newValue) {
                         setState(() {
-                          _selectedFilter = newValue;
+                          _selectedFilter = newValue.toString();
                         });
                         BlocProvider.of<CategoryBloc>(context).add(
                           GetListCategoryProducts(
@@ -301,6 +307,7 @@ class _HobbyPageState extends State<HobbyPage> {
         IconButton(
           icon: const Icon(Icons.clear),
           onPressed: () {
+            // ignore: unnecessary_null_comparison
             if (_searchQueryController == null ||
                 _searchQueryController.text.isEmpty) {
               Navigator.pop(context);

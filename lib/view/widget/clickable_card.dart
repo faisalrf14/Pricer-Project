@@ -6,7 +6,7 @@ import 'package:pricer_project/view/DetailView/detail_view.dart';
 class ClickableCard extends StatelessWidget {
   final MainProducts mainProducts;
 
-  ClickableCard({this.mainProducts});
+  ClickableCard({required this.mainProducts});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class ClickableCard extends StatelessWidget {
         child: Column(
           children: [
             Image.network(
-              mainProducts.imageUrl ?? imageNotFound,
+              mainProducts.imageUrl,
               fit: BoxFit.fitWidth,
             ),
             ListTile(

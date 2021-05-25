@@ -11,8 +11,8 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  List<Keyword> _suggestions;
-  String _query;
+  late List<Keyword> _suggestions;
+  late String _query;
 
   @override
   void initState() {
@@ -54,8 +54,12 @@ class _SearchBarState extends State<SearchBar> {
           BlocProvider.of<SearchBloc>(context)
               .add(GetTokpedSuggestion(query: _query, limit: kConstantLimit));
 
-          BlocProvider.of<SearchBloc>(context)
-              .add(GetTokpedProduct(query: _query, limit: kConstantLimit));
+          BlocProvider.of<SearchBloc>(context).add(GetTokpedProduct(
+            query: _query,
+            limit: kConstantLimit,
+            fromLow: true,
+            parentCategory: '',
+          ));
         },
         transition: SlideFadeFloatingSearchBarTransition(),
         actions: [
@@ -112,7 +116,11 @@ class _SearchBarState extends State<SearchBar> {
                         _query = e.keyword;
                       });
                       BlocProvider.of<SearchBloc>(context).add(GetTokpedProduct(
-                          query: _query, limit: kConstantLimit));
+                        query: _query,
+                        limit: kConstantLimit,
+                        fromLow: true,
+                        parentCategory: '',
+                      ));
                     },
                   );
                 }).toList(),

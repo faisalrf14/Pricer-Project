@@ -15,7 +15,7 @@ class SearchListDone extends SearchState {
   final List<MainProducts> listProducts;
   final String query;
 
-  SearchListDone({this.listProducts, this.query});
+  SearchListDone({required this.listProducts, required this.query});
 
   @override
   List<Object> get props => [listProducts, query];
@@ -24,7 +24,7 @@ class SearchListDone extends SearchState {
 class SearchListFailure extends SearchState {
   final String message;
 
-  SearchListFailure({this.message});
+  SearchListFailure({required this.message});
 
   @override
   List<Object> get props => [message];
@@ -33,7 +33,7 @@ class SearchListFailure extends SearchState {
 class SearchListSuggestionDone extends SearchState {
   final List<Keyword> suggestion;
 
-  SearchListSuggestionDone({this.suggestion});
+  SearchListSuggestionDone({required this.suggestion});
 
   @override
   List<Object> get props => [suggestion];
